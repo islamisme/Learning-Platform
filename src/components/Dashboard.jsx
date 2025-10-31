@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const stats = [
   { label: 'Active Courses', value: 8, glow: 'from-[#60F5FF]/60 to-transparent' },
   { label: 'Completed', value: 14, glow: 'from-[#FF7DE8]/60 to-transparent' },
@@ -43,7 +45,7 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <h3 className="text-xl   font-semibold text-[#F5F7FF]">My Courses Overview</h3>
               <button className="rounded-full border border-white/10 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9] transition hover:border-[#60F5FF]/40 hover:text-[#60F5FF]">
-                View all
+               <Link to={"/Courses"}> View all</Link>
               </button>
             </div>
             <div className="grid gap-4 md:grid-cols-3">

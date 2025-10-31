@@ -11,8 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Sidebar />}>
           <Route path="/"  index element={<Dashboard />} />
+          <Route path="/Courses" element={<Courses/>}/> 
         </Route>
-        <Route path="/Courses" element={<Courses/>}/> 
+        
       </Routes>
     </BrowserRouter>
   )
