@@ -1,39 +1,8 @@
-Creative E-Learning Platform
-│
-├── 🏠 Dashboard
-│   ├─ 📚 My Courses Overview
-│   │   ├─ Enrolled Courses
-│   │   ├─ Upcoming Lessons
-│   │   └─ Recent Activity
-│   ├─ 📈 Learning Progress
-│   │   ├─ Course Completion Tracker
-│   │   ├─ Study Streaks & Goals
-│   │   └─ Performance Insights (AI-based)
-│   │
-│   └─ 🔔 Notifications & Reminders
-│       ├─ Upcoming Deadlines
-│       ├─ Course Updates
-│       └─ Personalized Study Tips
+# How to Run :
 
-├── 📋 Progress Tracker
-│   ├─ Study Time / Pomodoro
-│   ├─ Progress Bars
-│   └─ Gamified Badges
+- #### install npm package if you dont have it
+- #### then use this command while you in the root directory 
 
-├── 🧩 Collaboration Zone
-│   ├─ Shared Study Rooms
-│   ├─ Peer Q&A
-│   ├─ Group Notes
-│   └─ Teacher Dashboard
-│
-├── ⚙️ Integrations
-│   ├─ Google Drive / OneDrive
-│   ├─ Calendar Sync
-│   ├─ Browser Extension
-│   └─ Built-in PDF/EPUB Reader
-│
-└── 🌙 UI/UX
-    ├─ Minimal Focus Mode
-    ├─ Split-Screen View
-    ├─ Light/Dark Theme
-    └─ Adaptive Layouts
+```
+npm run dev
+```
