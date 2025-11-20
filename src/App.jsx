@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar'
 import "./app.css"
 import Courses from './components/Courses'
 import Login from './components/Login'
+import Register from './components/Register'
 function App() {
 
 
@@ -13,8 +14,9 @@ function App() {
         <Route path="/" element={<Login/>}/>
         <Route path="/Home" element={<Sidebar />}>
           <Route index element={<Dashboard />} />
-          <Route path="Courses" element={<Courses/>}/> 
+          <Route path="/Home/Courses" element={<Courses/>}/> 
         </Route>
+        <Route path="/Register" element={<Register/>}/>
       </Routes>
     </BrowserRouter>
   )

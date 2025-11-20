@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -83,13 +83,11 @@ function Login() {
           </form>
 
           {/* Footer */}
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center flex flex-col items-center justify-center">
             <p className="text-xs uppercase tracking-[0.3em] text-[#B7BCD9]">
               Don't have an account?{' '}
-              <a href="#" className="text-[#60F5FF] hover:text-[#FF7DE8] transition">
-                Register Now
-              </a>
             </p>
+            <Link to={"/Register"} className="text-[#60F5FF] hover:text-[#FF7DE8] transition">Register Now</Link>
           </div>
         </div>
       </div>
