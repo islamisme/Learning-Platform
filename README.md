@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-# How to Run :
-
-- #### install npm package if you dont have it
-- #### then use this command while you in the root directory 
-
-```
-npm run dev
-```
-=======
 # Learning-Platform
 A modern web-based learning platform that allows students and instructors to connect through interactive online courses. It’s designed as a full-stack project featuring a clean frontend, a structured backend API, and room for integration with other languages or services.
 
@@ -24,4 +14,16 @@ A modern web-based learning platform that allows students and instructors to con
 - [ ] 💬 Discussion Forum — Student & instructor communication  
 - [ ] 🪙 Payment System — Optional premium courses via Stripe  
 - [ ] 📈 Analytics Dashboard — For admins and instructors  
+
+
+<<<<<<< HEAD
+# How to Run :
+
+- #### install npm package if you dont have it
+- #### then use this command while you in the root directory 
+
+```
+npm run dev
+```
+=======
 >>>>>>> origin/main
