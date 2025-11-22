@@ -1,66 +1,91 @@
-import React, { useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import React from 'react'
+import { NavLink, Outlet } from 'react-router-dom'
 
 export default function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-
-  const navLinks = [
-    { to: '/', label: 'Home', hover: 'hover:border-[#60F5FF]/40 hover:text-[#60F5FF]' },
-    { to: '/Notes', label: 'Notes', hover: 'hover:border-[#FF7DE8]/40 hover:text-[#FF7DE8]' },
-    { to: '/Profile', label: 'Profile', hover: 'hover:border-[#FFE7FF]/40 hover:text-[#FFE7FF]' },
-    { to: '/Courses', label: 'Courses', hover: 'hover:border-[#60F5FF]/40 hover:text-[#60F5FF]' },
+  const sections = [
+    {
+      title: 'Workspace',
+      items: [
+        { label: 'Home', to: '/Home', accent: 'text-[#60F5FF]' },
+        { label: 'Notes', to: '/Home/Notes', accent: 'text-[#FF7DE8]' },
+        { label: 'Profile', to: '/Home/Profile', accent: 'text-[#FFE7FF]' },
+        { label: 'Courses', to: '/Home/Courses', accent: 'text-[#60F5FF]' },
+      ],
+    },
+   
   ]
 
-  const sidebarOffset = isCollapsed ? 'md:ml-20' : 'md:ml-72'
-
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#050615] via-[#1F1A55] to-[#6C47FF]">
-      <aside
-        className={`fixed inset-y-0 left-0 z-20 hidden items-stretch overflow-hidden border-r border-white/10 bg-white/5 backdrop-blur-[1.1rem] shadow-[0_25px_50px_-12px_rgba(15,18,35,0.45)] transition-[width] duration-300 ease-out md:flex ${
-          isCollapsed ? 'w-20 px-4 py-10' : 'w-72 px-8 py-12'
-        }`}
-      >
-        {!isCollapsed && (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.35),transparent_100%)] opacity-70" aria-hidden />
-        )}
-
-        <button
-          type="button"
-          onClick={() => setIsCollapsed((prev) => !prev)}
-          className={`absolute right-4 top-6 flex h-11 w-11 items-center justify-center rounded-full border border-[#60F5FF]/10 bg-[#0F1223]/10 text-[#F5F7FF] text-xl shadow-[0_12px_24px_rgba(10,12,25,0.45)] transition hover:border-[#60F5FF] hover:text-[#60F5FF] ${
-            isCollapsed ? 'backdrop-blur-sm text-[2rem] bg-[#0F1223]/90' : ''
-          }`}
-          aria-label={isCollapsed ? 'فتح الشريط الجانبي' : 'طي الشريط الجانبي'}
-        >
-          {isCollapsed ? '>' : 'X'}
-        </button>
-
-        <div
-          className={`relative z-10 mt-12 flex flex-1 flex-col justify-between transition-opacity duration-200 ${
-            isCollapsed ? 'pointer-events-none opacity-0' : 'opacity-100'
-          }`}
-        >
-          <div className="space-y-2 text-center">
-            <span className="text-sm uppercase tracking-[0.5em] text-[#B7BCD9]">knowledge</span>
-            <h1 className="text-[2rem] font-semibold text-[#F5F7FF]">Learning Hub</h1>
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#050615] via-[#1F1A55] to-[#6C47FF] md:flex-row">
+      <aside className="fixed z-10 flex w-full flex-col overflow-hidden border-b border-white/10 bg-black/30 px-6 py-5 backdrop-blur-2xl shadow-[0_25px_50px_-12px_rgba(15,18,35,0.45)] md:h-full md:w-[18rem] md:min-w-[18rem] md:border-b-0 md:border-r md:px-8 md:py-10">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.35),transparent_95%)] opacity-80" aria-hidden />
+        <div className="relative z-10 flex h-full flex-col gap-10">
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-1">
+                <span className="text-[0.65rem] uppercase tracking-[0.45em] text-[#B7BCD9]">knowledge</span>
+                <h1 className="text-2xl font-semibold text-[#F5F7FF]">Learning Hub</h1>
+              </div>
+              <button className="rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#D5C9FF] transition hover:border-white/20 hover:bg-white/15">
+                + New
+              </button>
+            </div>
+            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-[#C7CCF5] shadow-inner shadow-[#02030C]/60">
+              <span className="text-lg text-[#6C47FF]">⌘</span>
+              <input
+                type="text"
+                placeholder="Quick Find"
+                className="flex-1 bg-transparent text-[0.85rem] tracking-[0.2em] text-[#F5F7FF] placeholder:text-[#7E84AB] focus:outline-none"
+              />
+            </div>
           </div>
-          <nav className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`group rounded-xl border border-white/5 bg-white/10 px-6 py-3 text-center text-[1.1rem] font-medium uppercase tracking-[0.3em] text-[#F5F7FF] transition duration-200 hover:bg-white/15 ${link.hover}`}
-              >
-                {link.label}
-              </Link>
+
+          <nav className="flex-1 space-y-8 overflow-y-auto pb-6">
+            {sections.map((section) => (
+              <div key={section.title} className="space-y-3">
+                <span className="text-[0.6rem] uppercase tracking-[0.4em] text-[#8F94BC]">{section.title}</span>
+                <div className="space-y-1">
+                  {section.items.map((item) => (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      className={({ isActive }) =>
+                        [
+                          'group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-[0.8rem] font-medium uppercase tracking-[0.3em] transition duration-200',
+                          'text-[#DCE0FF] hover:border-white/10 hover:bg-white/10 hover:text-white',
+                          isActive ? 'border-white/20 bg-white/15 text-[#60F5FF] shadow-[0_15px_30px_-15px_rgba(96,245,255,0.45)]' : '',
+                        ].join(' ')
+                      }
+                    >
+                      <span className={`text-xs opacity-80 ${item.accent}`}>
+                        ●
+                      </span>
+                      <span>{item.label}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
-        
+
+          <div className="space-y-4 text-xs uppercase tracking-[0.3em]">
+            <button className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-3 py-2 text-[#F5F7FF] transition hover:border-white/10 hover:bg-white/10">
+              <span className="text-lg text-[#FF7DE8]">★</span>
+              Starred
+            </button>
+            <button className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-white/5 px-3 py-2 text-[#F5F7FF] transition hover:border-white/10 hover:bg-white/10">
+              <span className="text-lg text-[#60F5FF]">?</span>
+              Help Center
+            </button>
+          </div>
         </div>
       </aside>
-
-      <main className={`flex-1 transition-all duration-300 ${sidebarOffset}`}>
-        <Outlet />
+      <main className="relative flex-1">
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.08),transparent_70%)]" aria-hidden />
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(255,125,232,0.08),transparent_65%)]" aria-hidden />
+        <div className="relative h-full md:ml-[18rem] md:mt-0 mt-[175px] px-6 pb-10">
+          <Outlet />
+        </div>
       </main>
     </div>
   )

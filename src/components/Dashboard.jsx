@@ -45,7 +45,7 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <h3 className="text-xl   font-semibold text-[#F5F7FF]">My Courses Overview</h3>
               <button className="rounded-full border border-white/10 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9] transition hover:border-[#60F5FF]/40 hover:text-[#60F5FF]">
-               <Link to={"/Courses"}> View all</Link>
+               <Link to={"/Home/Courses"}> View all</Link>
               </button>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
