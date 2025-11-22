@@ -12,6 +12,40 @@ const skillOptions = [
   'History & Culture',
 ]
 
+const countries = [
+  'Saudi Arabia',
+  'United Arab Emirates',
+  'Egypt',
+  'Jordan',
+  'Lebanon',
+  'Kuwait',
+  'Qatar',
+  'Bahrain',
+  'Oman',
+  'Iraq',
+  'Syria',
+  'Yemen',
+  'Palestine',
+  'Morocco',
+  'Algeria',
+  'Tunisia',
+  'Libya',
+  'Sudan',
+  'United States',
+  'United Kingdom',
+  'Canada',
+  'Australia',
+  'France',
+  'Germany',
+  'Italy',
+  'Spain',
+  'Turkey',
+  'India',
+  'Pakistan',
+  'Bangladesh',
+  'Other',
+]
+
 export default function Register() {
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
@@ -21,6 +55,8 @@ export default function Register() {
     password: '',
     gender: '',
     phone: '',
+    role: '',
+    country: '',
     skills: [],
   })
   const [errors, setErrors] = useState({})
@@ -51,7 +87,7 @@ export default function Register() {
   }
 
   const validateStepOne = () => {
-    const requiredFields = ['username', 'email', 'password', 'gender', 'phone']
+    const requiredFields = ['username', 'email', 'password', 'gender', 'phone', 'role', 'country'  ]
     const newErrors = {}
 
     requiredFields.forEach((field) => {
@@ -145,7 +181,23 @@ export default function Register() {
                   </div>
                   {errors.email && <p className="text-xs text-[#FF7DE8]">{errors.email}</p>}
                 </div>
-
+                
+                <div className="space-y-2">
+                  <label className="block text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">Role</label>
+                  <div className="relative">
+                    <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-[#FF7DE8]/10 via-[#6C47FF]/10 to-transparent opacity-50" aria-hidden />
+                    <select
+                      value={formData.role}
+                      onChange={(e) => handleInputChange('role', e.target.value)}
+                      className="relative w-full appearance-none rounded-xl border border-white/10 bg-[#0F1223]/70 px-4 py-3 text-[#F5F7FF] focus:border-[#FF7DE8]/50 focus:outline-none focus:ring-2 focus:ring-[#FF7DE8]/20 transition"
+                    >
+                      <option value="">Select your Role</option>
+                      <option value="female">Instructor</option>
+                      <option value="male">Student</option>
+                    </select>
+                  </div>
+                  {errors.role && <p className="text-xs text-[#FF7DE8]">{errors.role}</p>}
+                </div>
                 <div className="space-y-2">
                   <label className="block text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">Password</label>
                   <div className="relative">
@@ -178,6 +230,7 @@ export default function Register() {
                   </div>
                   {errors.gender && <p className="text-xs text-[#FF7DE8]">{errors.gender}</p>}
                 </div>
+               
 
                 <div className="space-y-2 md:col-span-2">
                   <label className="block text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">Phone Number</label>
@@ -192,6 +245,26 @@ export default function Register() {
                     />
                   </div>
                   {errors.phone && <p className="text-xs text-[#FF7DE8]">{errors.phone}</p>}
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <label className="block text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">Country</label>
+                  <div className="relative">
+                    <div className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-br from-[#FF7DE8]/10 via-[#6C47FF]/10 to-transparent opacity-50" aria-hidden />
+                    <select
+                      value={formData.country}
+                      onChange={(e) => handleInputChange('country', e.target.value)}
+                      className="relative w-full appearance-none rounded-xl border border-white/10 bg-[#0F1223]/70 px-4 py-3 text-[#F5F7FF] focus:border-[#FF7DE8]/50 focus:outline-none focus:ring-2 focus:ring-[#FF7DE8]/20 transition"
+                    >
+                      <option value="">Select your Country</option>
+                      {countries.map((country) => (
+                        <option key={country} value={country}>
+                          {country}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {errors.country && <p className="text-xs text-[#FF7DE8]">{errors.country}</p>}
                 </div>
               </div>
             )}
