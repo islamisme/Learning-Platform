@@ -15,15 +15,28 @@ A modern web-based learning platform that allows students and instructors to con
 - [ ] 🪙 Payment System — Optional premium courses via Stripe  
 - [ ] 📈 Analytics Dashboard — For admins and instructors  
 
+# Prerequisites
+- Node.js 18+ and npm
+- PHP 8+
+- PostgreSQL 14+ (psql on PATH)
 
-<<<<<<< HEAD
 # How to Run :
 
-- #### install npm package if you dont have it
-- #### then use this command while you in the root directory 
+- #### Install npm package if you dont have it
+```
+npm install
+```
+- #### Then use this command while you in the root directory to run the React front end
 
 ```
 npm run dev
 ```
-=======
->>>>>>> origin/main
+- #### Run the PHP API 
+```
+php -S localhost:8000 -t backend\php
+```
+- #### Create the database
+```
+psql -U postgres -h 127.0.0.1 -p 5432 -c "CREATE DATABASE learning_platform;"
+psql -U postgres -h 127.0.0.1 -p 5432 -d learning_platform -f backend\php\sql\schema.sql
+```
