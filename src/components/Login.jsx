@@ -1,14 +1,36 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
+
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    navigate('/Home')
+    setError('')
+    setLoading(true)
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: email.trim(), password }),
+      })
+      const payload = await response.json().catch(() => ({}))
+      if (!response.ok || !payload.ok) {
+        throw new Error(payload.error || 'Invalid credentials')
+      }
+      navigate('/Home', { state: { user: payload } })
+    } catch (err) {
+      setError(err.message || 'Login failed')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -76,10 +98,12 @@ function Login() {
 
             <button
               type="submit"
-              className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02]"
+              disabled={loading}
+              className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02] disabled:opacity-60"
             >
-              Sign In
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
+            {error && <p className="mt-3 text-center text-xs text-[#FF7DE8]">{error}</p>}
           </form>
 
           {/* Footer */}

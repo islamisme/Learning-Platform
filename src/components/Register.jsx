@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '')
+
 const skillOptions = [
   'Science',
   'Mathematics',
@@ -60,6 +62,9 @@ export default function Register() {
     skills: [],
   })
   const [errors, setErrors] = useState({})
+  const [serverError, setServerError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -70,6 +75,7 @@ export default function Register() {
       ...prev,
       [field]: '',
     }))
+    setServerError('')
   }
 
   const toggleSkill = (skill) => {
@@ -111,18 +117,53 @@ export default function Register() {
     setStep(1)
   }
 
-  const handleComplete = (event) => {
+  const handleComplete = async (event) => {
     event.preventDefault()
     if (!formData.skills.length) {
       setErrors((prev) => ({
         ...prev,
         skills: 'اختر مهارة واحدة على الأقل لتكملة التسجيل',
       }))
-      
       return
     }
 
-    navigate('/Home', { state: formData })
+    setServerError('')
+    setSuccessMessage('')
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/register.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username.trim(),
+          email: formData.email.trim(),
+          password: formData.password,
+          gender: formData.gender,
+          phone: formData.phone.trim(),
+          role: formData.role,
+          country: formData.country,
+          skills: formData.skills,
+        }),
+      })
+
+      const payload = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        throw new Error(payload.error || 'حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى.')
+      }
+
+      setSuccessMessage('تم إنشاء الحساب بنجاح، جاري تحويلك...')
+      setTimeout(() => {
+        navigate('/Home', { state: { ...formData, userId: payload.id } })
+      }, 800)
+    } catch (error) {
+      setServerError(error.message || 'حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -316,7 +357,8 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02]"
+                  disabled={isSubmitting}
+                  className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02] disabled:opacity-60"
                 >
                   Next
                 </button>
@@ -324,12 +366,19 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleComplete}
-                  className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02]"
+                  disabled={isSubmitting}
+                  className="w-full rounded-xl border border-[#6C47FF]/40 bg-gradient-to-r from-[#60F5FF] via-[#6C47FF] to-[#FF7DE8] px-6 py-3 text-sm font-semibold uppercase tracking-[0.35em] text-[#F5F7FF] shadow-[0_15px_35px_-18px_rgba(108,71,255,0.5)] transition hover:shadow-[0_20px_45px_-15px_rgba(108,71,255,0.6)] hover:scale-[1.02] disabled:opacity-60"
                 >
-                  Complete Registration
+                  {isSubmitting ? 'Processing...' : 'Complete Registration'}
                 </button>
               )}
             </div>
+
+            {(serverError || successMessage) && (
+              <div className={`text-center text-sm ${serverError ? 'text-[#FF7DE8]' : 'text-[#60F5FF]'}`}>
+                {serverError || successMessage}
+              </div>
+            )}
           </form>
         </div>
       </div>

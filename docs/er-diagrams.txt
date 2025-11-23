@@ -1,0 +1,26 @@
+Learning Platform - Entity Relationship Diagrams
+===============================================
+
+Diagram 1: Users Table (current schema)
+--------------------------------------
+```mermaid
+erDiagram
+    USERS {
+        bigint id PK "BIGSERIAL"
+        varchar name "100 chars"
+        varchar email "190 chars, unique"
+        varchar password_hash "bcrypt"
+        text role "student|instructor"
+        text gender "female|male|prefer-not|null"
+        varchar phone "32 chars, optional"
+        varchar country "80 chars, optional"
+        jsonb skills "array of strings"
+        timestamptz created_at "default now()"
+    }
+```
+
+Notes:
+- Database engine: PostgreSQL 15+.
+- Source schema file: backend/php/sql/schema.sql.
+- Apply via: psql -h HOST -U USER -d learning_platform -f backend/php/sql/schema.sql
+- Add future ER diagrams below this section, each with a short heading plus the Mermaid block.
