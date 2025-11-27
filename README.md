@@ -34,9 +34,4 @@ npm run dev
 - #### Run the PHP API 
 ```
 php -S localhost:8000 -t backend\php
-```
-- #### Create the database
-```
-psql -U postgres -h 127.0.0.1 -p 5432 -c "CREATE DATABASE learning_platform;"
-psql -U postgres -h 127.0.0.1 -p 5432 -d learning_platform -f backend\php\sql\schema.sql
-```
+
