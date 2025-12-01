@@ -1,25 +1,33 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { courses } from '../data/courses'
 
 export default function Courses() {
-  const courses = [
-    { title: 'Quantum UX Foundations', progress: 72, instructor: 'Nova Ashton' },
-    { title: 'AI-Driven Content Strategy', progress: 54, instructor: 'Kepler Voss' },
-    { title: 'Stellar Presentation Skills', progress: 36, instructor: 'Lyra Quinn' },
-  ]
   return (
-    <>
-    <div className='grid grid-cols-3 gap-4 text-white'>
-      {courses.map((courses)=>
-        <>
-        <p className='text-sm font-medium text-[#F5F7FF]'>{courses.title}</p>
-        <p className='text-xs uppercase tracking-[0.35em] text-[#B7BCD9]'>{courses.instructor}</p>
-        <span className='text-xs uppercase tracking-[0.3em] text-[#60F5FF]'>
-                      {courses.progress}%
-                    </span>
-        </>
-      )}      
+    <div className="space-y-4 text-white">
+      {courses.map((course) => (
+        <div
+          key={course.id}
+          className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-[0_15px_35px_-18px_rgba(10,12,25,0.9)]"
+        >
+          <p className="text-sm font-medium text-[#F5F7FF]">{course.title}</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">
+            {course.instructor}
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-xs uppercase tracking-[0.3em] text-[#60F5FF]">
+              {course.progress}%
+            </span>
+            <Link
+              to={`/Home/Notes?course=${course.id}`}
+              className="rounded-full border border-[#6C47FF]/60 bg-[#6C47FF]/20 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#F5F7FF] hover:border-[#60F5FF]/70 hover:text-[#60F5FF]"
+            >
+              Notes
+            </Link>
+          </div>
+        </div>
+      ))}
     </div>
-    </>
   )
 }
 

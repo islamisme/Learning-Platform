@@ -30,29 +30,29 @@ function Dashboard() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.12),transparent_60%)]" aria-hidden />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,125,232,0.12),transparent_55%)]" aria-hidden />
       <div className="relative space-y-10 overflow-y-auto p-10">
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-[0_20px_45px_-15px_rgba(9,10,25,0.55)] backdrop-blur-lg">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_20px_45px_-15px_rgba(9,10,25,0.55)] backdrop-blur-lg">
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-[#D5C9FF]">Mission Briefing</p>
             <h2 className="mt-2 text-4xl font-semibold text-[#F5F7FF]">Welcome back, Cadet</h2>
           </div>
-          <span className="rounded-full border border-[#6C47FF]/40 bg-[#1F1A55]/70 px-6 py-2 text-xs uppercase tracking-[0.4em] text-[#60F5FF]">
+          <span className="rounded-full  -[#6C47FF]/40 bg-[#1F1A55]/70 px-6 py-2 text-xs uppercase tracking-[0.4em] text-[#60F5FF]">
             Sync status: Stable
           </span>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <section className="lg:col-span-2 space-y-6 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
+          <section className="lg:col-span-2 space-y-6 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
             <div className="flex items-center justify-between">
               <h3 className="text-xl   font-semibold text-[#F5F7FF]">My Courses Overview</h3>
-              <button className="rounded-full border border-white/10 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9] transition hover:border-[#60F5FF]/40 hover:text-[#60F5FF]">
-               <Link to={"/Home/Courses"}> View all</Link>
+              <button className="rounded-full  -white/10 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9] transition hover:-[#60F5FF]/40 hover:text-[#60F5FF]">
+               <Link className="abs text-white hover:bg-white/10" to={"/Home/Courses"}> View all</Link>
               </button>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {stats.map((item) => (
                 <div
                   key={item.label}
-                  className="relative overflow-hidden rounded-xl border border-white/5 bg-white/5 p-4"
+                  className="relative overflow-hidden rounded-xl  -white/5 bg-white/5 p-4"
                 >
                   <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.glow} opacity-70`} aria-hidden />
                   <div className="relative z-10 space-y-2">
@@ -66,7 +66,7 @@ function Dashboard() {
               {courses.map((course) => (
                 <div
                   key={course.title}
-                  className="rounded-xl border border-white/5 bg-[#0F1223]/70 p-4 shadow-[0_15px_35px_-18px_rgba(10,12,25,0.75)]"
+                  className="rounded-xl  -white/5 bg-[#0F1223]/70 p-4 shadow-[0_15px_35px_-18px_rgba(10,12,25,0.75)]"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
@@ -88,11 +88,11 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="space-y-4 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
+          <section className="space-y-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
             <h3 className="text-xl text-center font-semibold text-[#F5F7FF] bg-[#5b35f555] rounded-full">Notification </h3>
             <div className="space-y-4">
               {notifications.map((notification) => (
-                <div key={notification.title} className="group rounded-xl border border-white/5 bg-[#0F1223]/60 p-4 transition hover:border-[#6C47FF]/50">
+                <div key={notification.title} className="group rounded-xl  -white/5 bg-[#0F1223]/60 p-4 transition hover:-[#6C47FF]/50">
                   <p className="text-sm font-medium text-[#F5F7FF]">{notification.title}</p>
                   <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[#B7BCD9]">{notification.time}</p>
                 </div>
@@ -100,21 +100,21 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="lg:col-span-3 space-y-4 rounded-2xl border border-white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
+          <section className="lg:col-span-3 space-y-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <h3 className="text-xl font-semibold text-[#F5F7FF]">Learning Progress</h3>
-              <span className="rounded-full border border-[#FF7DE8]/40 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#FF7DE8]">
+              <span className="rounded-full  -[#FF7DE8]/40 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#FF7DE8]">
                 Weekly overview
               </span>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {learningProgress.map((item) => (
-                <div key={item.label} className="space-y-4 rounded-xl border border-white/5 bg-[#0F1223]/70 p-4">
+                <div key={item.label} className="space-y-4 rounded-xl  -white/5 bg-[#0F1223]/70 p-4">
                   <div className="flex items-center justify-between">
                     <p className="text-xs uppercase tracking-[0.35em] text-[#B7BCD9]">{item.label}</p>
                     <span className="text-sm font-semibold text-[#F5F7FF]">{item.value}%</span>
                   </div>
-                  <div className="relative h-24 overflow-hidden rounded-xl border border-white/5 bg-white/5">
+                  <div className="relative h-24 overflow-hidden rounded-xl  -white/5 bg-white/5">
                     <div className={`absolute inset-0 ${item.accent} opacity-40`} aria-hidden />
                     <div className="absolute bottom-0 left-0 right-0 flex items-end justify-around p-3 text-[#F5F7FF]/80">
                       <div className="flex flex-col items-center">

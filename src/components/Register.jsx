@@ -131,12 +131,25 @@ export default function Register() {
     setSuccessMessage('')
     setIsSubmitting(true)
 
+    const requestUrl = `${API_BASE_URL}/auth/register.php`
+    console.log('Registering with URL:', requestUrl)
+    console.log('Request data:', {
+      username: formData.username.trim(),
+      email: formData.email.trim(),
+      role: formData.role,
+      gender: formData.gender,
+      phone: formData.phone.trim(),
+      country: formData.country,
+      skills: formData.skills,
+    })
+
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register.php`, {
+      const response = await fetch(requestUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           username: formData.username.trim(),
           email: formData.email.trim(),
@@ -149,10 +162,28 @@ export default function Register() {
         }),
       })
 
-      const payload = await response.json().catch(() => ({}))
+      let payload = {}
+      try {
+        const text = await response.text()
+        console.log('Response status:', response.status, response.statusText)
+        console.log('Response text:', text)
+        if (text) {
+          payload = JSON.parse(text)
+          console.log('Parsed payload:', payload)
+        }
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError)
+        throw new Error(`خطأ في استجابة الخادم (${response.status}): ${response.statusText}`)
+      }
 
       if (!response.ok) {
-        throw new Error(payload.error || 'حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى.')
+        const errorMessage = payload.error || `خطأ في الخادم (${response.status}): ${response.statusText}`
+        console.error('Server error:', errorMessage, payload)
+        throw new Error(errorMessage)
+      }
+
+      if (!payload.id) {
+        throw new Error('فشل في إنشاء الحساب: لم يتم استلام معرف المستخدم')
       }
 
       setSuccessMessage('تم إنشاء الحساب بنجاح، جاري تحويلك...')
@@ -160,6 +191,7 @@ export default function Register() {
         navigate('/Home', { state: { ...formData, userId: payload.id } })
       }, 800)
     } catch (error) {
+      console.error('Registration error:', error)
       setServerError(error.message || 'حدث خطأ أثناء إنشاء الحساب، حاول مرة أخرى.')
     } finally {
       setIsSubmitting(false)

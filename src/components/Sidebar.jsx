@@ -26,11 +26,11 @@ export default function Sidebar() {
                 <span className="text-[0.65rem] uppercase tracking-[0.45em] text-[#B7BCD9]">knowledge</span>
                 <h1 className="text-2xl font-semibold text-[#F5F7FF]">Learning Hub</h1>
               </div>
-              <button className="rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#D5C9FF] transition hover:border-white/20 hover:bg-white/15">
+              <button className="rounded-lg  bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#D5C9FF] transition hover:border-white/20 hover:bg-white/15">
                 + New
               </button>
             </div>
-            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-[#C7CCF5] shadow-inner shadow-[#02030C]/60">
+            <div className="flex items-center gap-3 rounded-xl  bg-black/30 px-3 py-2 text-sm text-[#C7CCF5] shadow-inner shadow-[#02030C]/60">
               <span className="text-lg text-[#6C47FF]">⌘</span>
               <input
                 type="text"
@@ -51,9 +51,9 @@ export default function Sidebar() {
                       to={item.to}
                       className={({ isActive }) =>
                         [
-                          'group flex items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-[0.8rem] font-medium uppercase tracking-[0.3em] transition duration-200',
-                          'text-[#DCE0FF] hover:border-white/10 hover:bg-white/10 hover:text-white',
-                          isActive ? 'border-white/20 bg-white/15 text-[#60F5FF] shadow-[0_15px_30px_-15px_rgba(96,245,255,0.45)]' : '',
+                          'group abs flex item  s-center gap-3 rounded-xl  px-3 py-2 text-[0.8rem] font-medium uppercase tracking-[0.3em] transition duration-200',
+                          'text-[#DCE0FF]  hover:bg-white/10 hover:text-white',
+                          isActive ? ' bg-white/15 text-[#60F5FF] shadow-[0_15px_30px_-15px_rgba(96,245,255,0.45)]' : '',
                         ].join(' ')
                       }
                     >
