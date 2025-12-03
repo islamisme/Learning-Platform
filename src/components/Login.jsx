@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '')
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -15,18 +15,37 @@ function Login() {
     setError('')
     setLoading(true)
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login.php`, {
+      const requestUrl = `${API_BASE_URL}/auth/login.php`
+      console.log('Logging in with URL:', requestUrl)
+      const response = await fetch(requestUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ email: email.trim(), password }),
       })
-      const payload = await response.json().catch(() => ({}))
+      
+      let payload = {}
+      try {
+        const text = await response.text()
+        console.log('Response status:', response.status, response.statusText)
+        console.log('Response text:', text)
+        if (text) {
+          payload = JSON.parse(text)
+          console.log('Parsed payload:', payload)
+        }
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError)
+        throw new Error(`خطأ في استجابة الخادم (${response.status}): ${response.statusText}`)
+      }
+      
       if (!response.ok || !payload.ok) {
-        throw new Error(payload.error || 'Invalid credentials')
+        const errorMessage = payload.error || `خطأ في الخادم (${response.status}): ${response.statusText}`
+        console.error('Login error:', errorMessage, payload)
+        throw new Error(errorMessage)
       }
       navigate('/Home', { state: { user: payload } })
     } catch (err) {
+      console.error('Login error:', err)
       setError(err.message || 'Login failed')
     } finally {
       setLoading(false)

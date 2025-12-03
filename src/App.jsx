@@ -5,6 +5,8 @@ import "./app.css"
 import Courses from './components/Courses'
 import Login from './components/Login'
 import Register from './components/Register'
+import NotesApp from './components/Notes/App'
+import { NewNote } from './components/Notes/NewNote'
 function App() {
 
 
@@ -15,6 +17,7 @@ function App() {
         <Route path="/Home" element={<Sidebar />}>
           <Route index element={<Dashboard />} />
           <Route path="/Home/Courses" element={<Courses/>}/> 
+          <Route path="/Home/Notes/*" element={<NotesApp/>}/>
         </Route>
         <Route path="/Register" element={<Register/>}/>
       </Routes>

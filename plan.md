@@ -8,7 +8,7 @@ Text: Crisp white #F5F7FF for headings, muted silver #B7BCD9 for body, faint lav
 
 Surfaces: Glassmorphism panels (rgba(15,18,35,0.65)) with 1px neon edge glow (rgba(112,94,255,0.35)) and soft drop shadows
 
-Buttons & Links: Rounded 12px radius, frosted background, hover state adds inner glow and accent gradient border
+Buttons & Links: Rounded 12px radius, frosted background, hozver state adds inner glow and accent gradient border
 
 Icons & Divider Lines: Thin line icons with luminescent outline; dividers use blurred star-glow (rgba(123,97,255,0.35))
 
