@@ -18,7 +18,7 @@ A modern web-based learning platform that allows students and instructors to con
 # Prerequisites
 - Node.js 18+ and npm
 - PHP 8+
-- PostgreSQL 14+ (psql on PATH)
+
 
 # How to Run :
 
