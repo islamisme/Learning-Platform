@@ -5,7 +5,7 @@ declare(strict_types=1);
 session_start();
 
 require __DIR__ . '/../cors.php';
-require __DIR__ . '/../config.php';
+require __DIR__ . '/../bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);

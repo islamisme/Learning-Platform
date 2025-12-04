@@ -8,7 +8,7 @@ ini_set('log_errors', '1');
 // ini_set('error_log', __DIR__ . '/../../error.log');
 
 require __DIR__ . '/../cors.php';
-require __DIR__ . '/../config.php';
+require __DIR__ . '/../bootstrap.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
