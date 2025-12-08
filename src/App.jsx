@@ -7,6 +7,7 @@ import Login from './components/Login'
 import Register from './components/Register'
 import NotesApp from './components/Notes/App'
 import { NewNote } from './components/Notes/NewNote'
+import AuthGate from './components/AuthGate'
 function App() {
 
 
@@ -14,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>}/>
-        <Route path="/Home" element={<Sidebar />}>
+        <Route path="/Home" element={<AuthGate><Sidebar /></AuthGate>}>
           <Route index element={<Dashboard />} />
           <Route path="/Home/Courses" element={<Courses/>}/> 
           <Route path="/Home/Notes/*" element={<NotesApp/>}/>

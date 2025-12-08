@@ -27,6 +27,7 @@ type NoteListProps = {
   notes: SimplifiedNote[]
   onDeleteTag: (id: string) => void
   onUpdateTag: (id: string, label: string) => void
+  loading?: boolean
 }
 
 type EditTagsModalProps = {
@@ -42,6 +43,7 @@ export function NoteList({
   notes,
   onUpdateTag,
   onDeleteTag,
+  loading = false,
 }: NoteListProps) {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
   const [title, setTitle] = useState("")
@@ -162,11 +164,17 @@ export function NoteList({
         </div>
       </Form>
       <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
-        {filteredNotes.map(note => (
-          <Col key={note.id}>
-            <NoteCard id={note.id} title={note.title} tags={note.tags} />
+        {loading && filteredNotes.length === 0 ? (
+          <Col>
+            <div className="text-center text-[#B7BCD9] py-4">Loading…</div>
           </Col>
-        ))}
+        ) : (
+          filteredNotes.map(note => (
+            <Col key={note.id}>
+              <NoteCard id={note.id} title={note.title} tags={note.tags} />
+            </Col>
+          ))
+        )}
       </Row>
       <EditTagsModal
         onUpdateTag={onUpdateTag}

@@ -10,47 +10,21 @@ $method = $_SERVER['REQUEST_METHOD'];
 $raw = file_get_contents('php://input');
 $body = $raw ? json_decode($raw, true) : null;
 $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-if ($driver === 'pgsql') {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS notes (
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        markdown TEXT NOT NULL,
-        tag_ids JSONB NOT NULL DEFAULT '[]'::jsonb,
-        course_id TEXT DEFAULT NULL,
-        user_id BIGINT NOT NULL,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    )");
-} elseif ($driver === 'mysql') {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS notes (
-        id VARCHAR(64) PRIMARY KEY,
-        title TEXT NOT NULL,
-        markdown LONGTEXT NOT NULL,
-        tag_ids JSON NOT NULL,
-        course_id VARCHAR(64) DEFAULT NULL,
-        user_id BIGINT NOT NULL,
-        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-    )");
-} elseif ($driver === 'sqlite') {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS notes (
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        markdown TEXT NOT NULL,
-        tag_ids TEXT NOT NULL DEFAULT '[]',
-        course_id TEXT DEFAULT NULL,
-        user_id INTEGER NOT NULL,
-        created_at TEXT NOT NULL DEFAULT (datetime('now'))
-    )");
-} else {
-    $pdo->exec("CREATE TABLE IF NOT EXISTS notes (
-        id TEXT PRIMARY KEY,
-        title TEXT NOT NULL,
-        markdown TEXT NOT NULL,
-        tag_ids TEXT NOT NULL,
-        course_id TEXT DEFAULT NULL,
-        user_id INTEGER NOT NULL,
-        created_at TEXT NOT NULL
-    )");
+if ($driver !== 'pgsql') {
+    http_response_code(500);
+    echo json_encode(['error' => 'PostgreSQL is required for this endpoint']);
+    exit;
 }
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS notes (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    markdown TEXT NOT NULL,
+    tag_ids JSONB NOT NULL DEFAULT '[]'::jsonb,
+    course_id TEXT DEFAULT NULL,
+    user_id BIGINT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+)");
 
 function gen_id(): string {
     return bin2hex(random_bytes(16));

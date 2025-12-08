@@ -1,104 +1,125 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./NotesTheme.css"
-import { Container } from "react-bootstrap"
+import { Alert, Container, Spinner } from "react-bootstrap"
 import { Routes, Route, Navigate } from "react-router-dom"
 import { NewNote } from "./NewNote"
-import { useLocalStorage } from "./useLocalStorage"
-import { v4 as uuidV4 } from "uuid"
 import { NoteList } from "./NoteList"
 import { NoteLayout } from "./NoteLayout"
 import { Note } from "./Note"
 import { EditNote } from "./EditNote"
+import {
+  createNote as apiCreateNote,
+  createTag as apiCreateTag,
+  deleteNote as apiDeleteNote,
+  deleteTag as apiDeleteTag,
+  fetchNotes,
+  updateNote as apiUpdateNote,
+  updateTag as apiUpdateTag,
+} from "./api"
 
-export type Note = {
-  id: string
-} & NoteData
-
-export type RawNote = {
-  id: string
-} & RawNoteData
-
-export type RawNoteData = {
-  title: string
-  markdown: string
-  tagIds: string[]
-  courseId?: string
-}
+export type Tag = { id: string; label: string }
 
 export type NoteData = {
   title: string
   markdown: string
   tags: Tag[]
-  courseId?: string
+  courseId?: string | null
 }
 
-export type Tag = {
+export type Note = {
   id: string
-  label: string
+  title: string
+  markdown: string
+  courseId?: string | null
+  tags: Tag[]
 }
 
 function App() {
-  const [notes, setNotes] = useLocalStorage<RawNote[]>("NOTES", [])
-  const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
+  const [notes, setNotes] = useState<Note[]>([])
+  const [tags, setTags] = useState<Tag[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      try {
+        const { notes: apiNotes, tags: apiTags } = await fetchNotes()
+        if (!cancelled) {
+          setNotes(apiNotes)
+          setTags(apiTags)
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : "Failed to load notes")
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const notesWithTags = useMemo(() => {
-    return notes.map(note => {
-      return { ...note, tags: tags.filter(tag => note.tagIds.includes(tag.id)) }
-    })
+    return notes.map(note => ({
+      ...note,
+      tags: note.tags.map(tag => tags.find(t => t.id === tag.id) ?? tag),
+    }))
   }, [notes, tags])
 
-  function onCreateNote({ tags, ...data }: NoteData) {
-    setNotes(prevNotes => {
-      return [
-        ...prevNotes,
-        {
-          ...data,
-          id: uuidV4(),
-          tagIds: tags.map(tag => tag.id),
-        },
-      ]
+  async function onCreateNote({ tags: selectedTags, ...data }: NoteData) {
+    const { note, tags: updatedTags } = await apiCreateNote({
+      ...data,
+      tags: selectedTags,
     })
+    setNotes(prev => [note, ...prev.filter(n => n.id !== note.id)])
+    setTags(updatedTags)
   }
 
-  function onUpdateNote(id: string, { tags, ...data }: NoteData) {
-    setNotes(prevNotes => {
-      return prevNotes.map(note => {
-        if (note.id === id) {
-          return { ...note, ...data, tagIds: tags.map(tag => tag.id) }
-        } else {
-          return note
-        }
-      })
+  async function onUpdateNote(id: string, { tags: selectedTags, ...data }: NoteData) {
+    const { note, tags: updatedTags } = await apiUpdateNote(id, {
+      ...data,
+      tags: selectedTags,
     })
+    setNotes(prev => prev.map(n => (n.id === id ? note : n)))
+    setTags(updatedTags)
   }
 
-  function onDeleteNote(id: string) {
-    setNotes(prevNotes => {
-      return prevNotes.filter(note => note.id !== id)
-    })
+  async function onDeleteNote(id: string) {
+    await apiDeleteNote(id)
+    setNotes(prev => prev.filter(note => note.id !== id))
   }
 
-  function addTag(tag: Tag) {
-    setTags(prev => [...prev, tag])
+  async function addTag(label: string) {
+    const newTag = await apiCreateTag(label)
+    setTags(prev => {
+      const existing = prev.find(t => t.id === newTag.id)
+      if (existing) return prev
+      return [...prev, newTag]
+    })
+    return newTag
   }
 
-  function updateTag(id: string, label: string) {
-    setTags(prevTags => {
-      return prevTags.map(tag => {
-        if (tag.id === id) {
-          return { ...tag, label }
-        } else {
-          return tag
-        }
-      })
-    })
+  async function updateTag(id: string, label: string) {
+    const updated = await apiUpdateTag(id, label)
+    setTags(prev => prev.map(tag => (tag.id === id ? updated : tag)))
   }
 
-  function deleteTag(id: string) {
-    setTags(prevTags => {
-      return prevTags.filter(tag => tag.id !== id)
-    })
+  async function deleteTag(id: string) {
+    await apiDeleteTag(id)
+    setTags(prev => prev.filter(tag => tag.id !== id))
+    setNotes(prev =>
+      prev.map(note => ({
+        ...note,
+        tags: note.tags.filter(tag => tag.id !== id),
+      }))
+    )
   }
 
   return (
@@ -112,6 +133,17 @@ function App() {
         aria-hidden
       />
       <Container className="notes-theme relative my-8 space-y-6 text-[#F5F7FF]">
+        {loading && (
+          <div className="d-flex align-items-center gap-2">
+            <Spinner size="sm" animation="border" role="status" />
+            <span>Loading notes…</span>
+          </div>
+        )}
+        {error && (
+          <Alert variant="danger" className="bg-danger/20 border-danger/40 text-white">
+            {error}
+          </Alert>
+        )}
         <Routes>
           <Route
             index
@@ -121,6 +153,7 @@ function App() {
                 availableTags={tags}
                 onUpdateTag={updateTag}
                 onDeleteTag={deleteTag}
+                loading={loading}
               />
             }
           />
@@ -134,7 +167,10 @@ function App() {
               />
             }
           />
-          <Route path=":id" element={<NoteLayout notes={notesWithTags} />}>
+          <Route
+            path=":id"
+            element={<NoteLayout notes={notesWithTags} loading={loading} />}
+          >
             <Route index element={<Note onDelete={onDeleteNote} />} />
             <Route
               path="edit"

@@ -3,8 +3,8 @@ import { NoteForm } from "./NoteForm"
 import { useNote } from "./NoteLayout"
 
 type EditNoteProps = {
-  onSubmit: (id: string, data: NoteData) => void
-  onAddTag: (tag: Tag) => void
+  onSubmit: (id: string, data: NoteData) => Promise<void> | void
+  onAddTag: (label: string) => Promise<Tag>
   availableTags: Tag[]
 }
 
