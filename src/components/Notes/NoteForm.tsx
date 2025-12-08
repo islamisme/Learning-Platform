@@ -1,14 +1,13 @@
 import React, { FormEvent, useRef, useState } from "react"
-import { Button, Col, Form, Row, Stack } from "react-bootstrap"
+import { Alert, Button, Col, Form, Row, Stack } from "react-bootstrap"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import CreatableReactSelect from "react-select/creatable"
 import { NoteData, Tag } from "./App"
-import { v4 as uuidV4 } from "uuid"
 import { courses } from "../../data/courses"
 
 type NoteFormProps = {
-  onSubmit: (data: NoteData) => void
-  onAddTag: (tag: Tag) => void
+  onSubmit: (data: NoteData) => Promise<void> | void
+  onAddTag: (label: string) => Promise<Tag>
   availableTags: Tag[]
 } & Partial<NoteData>
 
@@ -29,23 +28,37 @@ export function NoteForm({
   const [selectedCourseId, setSelectedCourseId] = useState<string | undefined>(
     courseId ?? initialCourseFromQuery ?? undefined
   )
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-
-    onSubmit({
-      title: titleRef.current!.value,
-      markdown: markdownRef.current!.value,
-      tags: selectedTags,
-      courseId: selectedCourseId,
-    })
-
-    navigate("..")
+    setSubmitError(null)
+    setSubmitting(true)
+    try {
+      await onSubmit({
+        title: titleRef.current!.value,
+        markdown: markdownRef.current!.value,
+        tags: selectedTags,
+        courseId: selectedCourseId,
+      })
+      navigate("..")
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to save note"
+      setSubmitError(message)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
     <Form onSubmit={handleSubmit}>
+      {submitError && (
+        <Alert variant="danger" className="bg-danger/20 border-danger/40 text-white">
+          {submitError}
+        </Alert>
+      )}
       <Stack gap={4}>
         <Row>
           <Col>
@@ -81,9 +94,8 @@ export function NoteForm({
               <Form.Label>Tags</Form.Label>
               <CreatableReactSelect
                 classNamePrefix="react-select"
-                onCreateOption={label => {
-                  const newTag = { id: uuidV4(), label }
-                  onAddTag(newTag)
+                onCreateOption={async label => {
+                  const newTag = await onAddTag(label)
                   setSelectedTags(prev => [...prev, newTag])
                 }}
                 value={selectedTags.map(tag => {
@@ -116,7 +128,7 @@ export function NoteForm({
         </Form.Group>
         <Stack direction="horizontal" gap={2} className="justify-content-end">
           <Button type="submit" variant="primary">
-            Save
+            {submitting ? "Saving..." : "Save"}
           </Button>
           <Link to="..">
             <Button type="button" variant="outline-secondary">

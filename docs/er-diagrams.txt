@@ -19,6 +19,40 @@ erDiagram
     }
 ```
 
+Diagram 2: Notes & Tags (current schema)
+---------------------------------------
+```mermaid
+erDiagram
+    USERS ||--o{ NOTES : "owns"
+    USERS ||--o{ TAGS : "owns"
+    NOTES ||--o{ NOTE_TAGS : "tagged with"
+    TAGS ||--o{ NOTE_TAGS : "applies to"
+
+    NOTES {
+        text id PK
+        bigint user_id FK "references users(id)"
+        text title
+        text markdown
+        text course_id "nullable"
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    TAGS {
+        text id PK
+        bigint user_id FK "references users(id)"
+        varchar label "<=120 chars"
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    NOTE_TAGS {
+        text note_id FK "references notes(id)"
+        text tag_id FK "references tags(id)"
+        PRIMARY_KEY (note_id, tag_id)
+    }
+```
+
 Notes:
 - Database engine: PostgreSQL 15+.
 - Source schema file: backend/php/sql/schema.sql.
