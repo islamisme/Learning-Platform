@@ -5,5 +5,5 @@ return [
     'DB_PORT' => '5432',
     'DB_NAME' => 'learning_platform',
     'DB_USER' => 'islam',
-    'DB_PASS' => 'shell909',
+    'DB_PASS' => 'eng9840',
 ];
