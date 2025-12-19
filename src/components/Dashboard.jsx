@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { useEnrolledCourses } from '../context/EnrolledCoursesContext'
 
 const stats = [
   { label: 'Active Courses', value: 8, glow: 'from-[#60F5FF]/60 to-transparent' },
@@ -25,6 +26,7 @@ const notifications = [
 ]
 
 function Dashboard() {
+  const { enrolledCourses } = useEnrolledCourses()
   return (
     <div className="relative h-full">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.12),transparent_60%)]" aria-hidden />
@@ -99,6 +101,42 @@ function Dashboard() {
               ))}
             </div>
           </section>
+
+          {enrolledCourses.length > 0 && (
+            <section className="lg:col-span-3 space-y-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <h3 className="text-xl font-semibold text-[#F5F7FF]">My Career Courses</h3>
+                <span className="text-[0.7rem] uppercase tracking-[0.3em] text-[#B7BCD9]">
+                  Enrolled: {enrolledCourses.length}
+                </span>
+              </div>
+              <div className="space-y-3">
+                {enrolledCourses.map((course) => (
+                  <div
+                    key={course.id}
+                    className="flex flex-wrap items-center justify-between gap-3 rounded-xl  -white/5 bg-[#0F1223]/70 p-4 shadow-[0_15px_35px_-18px_rgba(10,12,25,0.75)]"
+                  >
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-[#F5F7FF]">
+                        {course.title}
+                      </p>
+                      <p className="text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9]">
+                        {course.provider} · {course.roleTitle}
+                      </p>
+                    </div>
+                    <a
+                      href={course.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-full border border-[#60F5FF]/60 bg-[#60F5FF]/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#60F5FF] hover:bg-[#60F5FF]/20"
+                    >
+                      Continue →
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           <section className="lg:col-span-3 space-y-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
             <div className="flex flex-wrap items-center justify-between gap-4">
