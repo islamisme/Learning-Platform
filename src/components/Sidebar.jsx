@@ -10,6 +10,10 @@ export default function Sidebar() {
         { label: 'Notes', to: '/Home/Notes', accent: 'text-[#FF7DE8]' },
         { label: 'Profile', to: '/Home/Profile', accent: 'text-[#FFE7FF]' },
         { label: 'Courses', to: '/Home/Courses', accent: 'text-[#60F5FF]' },
+        {
+          label: 'AI',
+          to: '/Home/Notes/AI',
+        },
       ],
     },
    
@@ -83,7 +87,7 @@ export default function Sidebar() {
       <main className="relative flex-1">
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.08),transparent_70%)]" aria-hidden />
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top_right,rgba(255,125,232,0.08),transparent_65%)]" aria-hidden />
-        <div className="relative h-full md:ml-[18rem] md:mt-0 mt-[175px] px-6 pb-10">
+        <div className="relative  md:ml-[18rem] md:mt-0 mt-[175px] px-6 pb-10">
           <Outlet />
         </div>
       </main>

@@ -5,6 +5,7 @@ import CreatableReactSelect from "react-select/creatable"
 import { NoteData, Tag } from "./App"
 import { v4 as uuidV4 } from "uuid"
 import { courses } from "../../data/courses"
+import AI from "./AI"
 
 type NoteFormProps = {
   onSubmit: (data: NoteData) => void
@@ -24,6 +25,7 @@ export function NoteForm({
   const titleRef = useRef<HTMLInputElement>(null)
   const markdownRef = useRef<HTMLTextAreaElement>(null)
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags)
+  const [Ai, setAi] = useState(0)
   const [searchParams] = useSearchParams()
   const initialCourseFromQuery = searchParams.get("course") ?? undefined
   const [selectedCourseId, setSelectedCourseId] = useState<string | undefined>(
@@ -43,7 +45,10 @@ export function NoteForm({
 
     navigate("..")
   }
+function handle_Ai(){
 
+  
+}
   return (
     <Form onSubmit={handleSubmit}>
       <Stack gap={4}>
@@ -113,6 +118,7 @@ export function NoteForm({
             ref={markdownRef}
             rows={15}
           />
+          {Ai ? <AI/> : ""}
         </Form.Group>
         <Stack direction="horizontal" gap={2} className="justify-content-end">
           <Button type="submit" variant="primary">
