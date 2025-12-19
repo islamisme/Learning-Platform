@@ -3,13 +3,13 @@ A modern web-based learning platform that allows students and instructors to con
 
 ### ✨ Features To-Do List
 
-- [ ] 🧾 User Roles — Student, Instructor, and Admin dashboards  
+- [x] 🧾 User Roles — Student, Instructor
 - [ ] 📚 Course Management — Create, edit, and enroll in courses  
 - [ ] 🎥 Lessons — Video, text, and file-based learning modules  
 - [ ] 🧮 Quizzes & Assessments — Interactive questions and auto-grading  
 - [ ] 📊 Progress Tracking — Course completion stats and certificates  
 - [ ] 🔐 Authentication — Secure login & registration (NextAuth / JWT)  
-- [ ] 🌐 RESTful API — Next.js route handlers, extendable to other backends  
+- [ ] 🌐 RESTful API — PHP route handlers, extendable to other backends  
 - [ ] 🎨 Frontend UI — Responsive layout with TailwindCSS  
 - [ ] 💬 Discussion Forum — Student & instructor communication  
 - [ ] 🪙 Payment System — Optional premium courses via Stripe  
@@ -18,7 +18,7 @@ A modern web-based learning platform that allows students and instructors to con
 # Prerequisites
 - Node.js 18+ and npm
 - PHP 8+
-- PostgreSQL 14+ (psql on PATH)
+
 
 # How to Run :
 
@@ -34,9 +34,4 @@ npm run dev
 - #### Run the PHP API 
 ```
 php -S localhost:8000 -t backend\php
-```
-- #### Create the database
-```
-psql -U postgres -h 127.0.0.1 -p 5432 -c "CREATE DATABASE learning_platform;"
-psql -U postgres -h 127.0.0.1 -p 5432 -d learning_platform -f backend\php\sql\schema.sql
-```
+

@@ -11,6 +11,8 @@ import CarrerGrid from './components/CarrerGrid'
 import AI from './components/Notes/AI'
 import CareerRoleDetails from './components/CareerRoleDetails'
 
+import { NewNote } from './components/Notes/NewNote'
+import AuthGate from './components/AuthGate'
 function App() {
   return (
     <EnrolledCoursesProvider>

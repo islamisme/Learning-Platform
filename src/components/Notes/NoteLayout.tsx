@@ -3,11 +3,16 @@ import { Note } from "./App"
 
 type NoteLayoutProps = {
   notes: Note[]
+  loading?: boolean
 }
 
-export function NoteLayout({ notes }: NoteLayoutProps) {
+export function NoteLayout({ notes, loading = false }: NoteLayoutProps) {
   const { id } = useParams()
   const note = notes.find(n => n.id === id)
+
+  if (loading) {
+    return null
+  }
 
   if (note == null) return <Navigate to="/Home/Notes/" replace />
 
