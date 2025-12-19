@@ -1,8 +1,78 @@
-*{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
     transition: 0.3s ease;
 }
 
-.abs{
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #050615 0%, #1F1A55 50%, #6C47FF 100%);
+    color: #F5F7FF;
+}
+
+.abs {
     text-decoration: none;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(96, 245, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(96, 245, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(96, 245, 255, 0.5);
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #60F5FF 0%, #6C47FF 50%, #FF7DE8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Glow Effect */
+.glow-effect {
+    box-shadow: 0 0 30px rgba(96, 245, 255, 0.2);
+}
+
+.glow-effect:hover {
+    box-shadow: 0 0 40px rgba(96, 245, 255, 0.3);
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glass Morphism */
+.glass {
+    background: rgba(15, 18, 35, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Elevation */
+.card-elevated {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.card-elevated:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(96, 245, 255, 0.15);
 }

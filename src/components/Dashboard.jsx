@@ -29,41 +29,44 @@ function Dashboard() {
   const { enrolledCourses } = useEnrolledCourses()
   return (
     <div className="relative h-full">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.12),transparent_60%)]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,125,232,0.12),transparent_55%)]" aria-hidden />
-      <div className="relative space-y-10 overflow-y-auto p-10">
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_20px_45px_-15px_rgba(9,10,25,0.55)] backdrop-blur-lg">
-          <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#D5C9FF]">Mission Briefing</p>
-            <h2 className="mt-2 text-4xl font-semibold text-[#F5F7FF]">Welcome back, Cadet</h2>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.15),transparent_60%)]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,125,232,0.15),transparent_55%)]" aria-hidden />
+      <div className="relative space-y-8 overflow-y-auto p-8">
+        <div className="glass rounded-2xl border border-white/10 p-8 shadow-card">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[#60F5FF]">Welcome Back</p>
+              <h2 className="text-4xl font-bold text-white">Welcome, Cadet 🚀</h2>
+              <p className="text-sm text-[#B7BCD9]">Continue your learning journey and reach new milestones</p>
+            </div>
+            <div className="glass rounded-full px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-[#60F5FF] border border-[#60F5FF]/30">
+              ✓ On Track
+            </div>
           </div>
-          <span className="rounded-full  -[#6C47FF]/40 bg-[#1F1A55]/70 px-6 py-2 text-xs uppercase tracking-[0.4em] text-[#60F5FF]">
-            Sync status: Stable
-          </span>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <section className="lg:col-span-2 space-y-6 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
+          <section className="lg:col-span-2 space-y-6 glass rounded-2xl border border-white/10 p-8 shadow-card">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl   font-semibold text-[#F5F7FF]">My Courses Overview</h3>
-              <button className="rounded-full  -white/10 bg-white/10 px-4 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-[#B7BCD9] transition hover:-[#60F5FF]/40 hover:text-[#60F5FF]">
-               <Link className="abs text-white hover:bg-white/10" to={"/Home/Courses"}> View all</Link>
-              </button>
+              <h3 className="text-2xl font-bold text-white">My Courses</h3>
+              <Link to={"/Home/Enrolled"} className="glass rounded-full px-4 py-2 text-[0.65rem] font-bold uppercase tracking-[0.25em] text-[#60F5FF] border border-[#60F5FF]/30 transition-all duration-200 hover:border-[#60F5FF]/60 hover:bg-[#60F5FF]/10">
+                View All →
+              </Link>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
-              {stats.map((item) => (
-                <div
-                  key={item.label}
-                  className="relative overflow-hidden rounded-xl  -white/5 bg-white/5 p-4"
-                >
-                  <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.glow} opacity-70`} aria-hidden />
-                  <div className="relative z-10 space-y-2">
-                    <p className="text-[0.65rem] uppercase tracking-[0.35em] text-[#D5C9FF]">{item.label}</p>
-                    <p className="text-3xl font-semibold text-[#F5F7FF]">{item.value}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+               {stats.map((item) => (
+                 <div
+                   key={item.label}
+                   className="glass relative overflow-hidden rounded-xl border border-white/10 p-5"
+                 >
+                   <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${item.glow} opacity-40`} aria-hidden />
+                   <div className="relative z-10 space-y-3">
+                     <p className="text-[0.65rem] font-bold uppercase tracking-[0.3em] text-[#60F5FF]">{item.label}</p>
+                     <p className="text-4xl font-bold text-white">{item.value}</p>
+                   </div>
+                 </div>
+               ))}
+             </div>
             <div className="space-y-4">
               {courses.map((course) => (
                 <div
@@ -90,8 +93,8 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="space-y-4 rounded-2xl  -white/5 bg-white/5 p-6 shadow-[0_25px_55px_-20px_rgba(9,10,25,0.6)] backdrop-blur-xl">
-            <h3 className="text-xl text-center font-semibold text-[#F5F7FF] bg-[#5b35f555] rounded-full">Notification </h3>
+          <section className="space-y-4 glass rounded-2xl border border-white/10 p-8 shadow-card">
+            <h3 className="text-xl font-bold text-white">Recent Notifications</h3>
             <div className="space-y-4">
               {notifications.map((notification) => (
                 <div key={notification.title} className="group rounded-xl  -white/5 bg-[#0F1223]/60 p-4 transition hover:-[#6C47FF]/50">

@@ -2,7 +2,7 @@ import React from "react"
 import { Badge, Button, Col, Row, Stack } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { useNote } from "./NoteLayout"
-import ReactMarkdown from "react-markdown"
+import { StyledMarkdown } from "./StyledMarkdown"
 import { courses } from "../../data/courses"
 
 type NoteProps = {
@@ -65,7 +65,7 @@ export function Note({ onDelete }: NoteProps) {
         </Col>
       </Row>
       <div className="mt-4 rounded-2xl border border-white/10 bg-[#050615]/70 p-6 text-[#F5F7FF] shadow-[0_20px_45px_-18px_rgba(5,6,21,0.9)]">
-        <ReactMarkdown>{note.markdown}</ReactMarkdown>
+        <StyledMarkdown>{note.markdown}</StyledMarkdown>
       </div>
     </>
   )

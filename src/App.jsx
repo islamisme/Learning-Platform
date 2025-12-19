@@ -2,7 +2,6 @@ import Dashboard from './components/Dashboard'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import './app.css'
-import Courses from './components/Courses'
 import Login from './components/Login'
 import Register from './components/Register'
 import NotesApp from './components/Notes/App'
@@ -10,6 +9,8 @@ import { EnrolledCoursesProvider } from './context/EnrolledCoursesContext'
 import CarrerGrid from './components/CarrerGrid'
 import AI from './components/Notes/AI'
 import CareerRoleDetails from './components/CareerRoleDetails'
+import EnrolledCourses from './components/EnrolledCourses'
+import CourseStore from './components/CourseStore'
 
 import { NewNote } from './components/Notes/NewNote'
 import AuthGate from './components/AuthGate'
@@ -21,10 +22,9 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/Home" element={<Sidebar />}>
             <Route index element={<Dashboard />} />
-            <Route path="Courses" element={<Courses />} />
-            {/* Fixed: Separate route for career roles grid */}
-            <Route path="careers" element={<CarrerGrid />} />
-            {/* Fixed: Career role details route */}
+            <Route path="Enrolled" element={<EnrolledCourses />} />
+            <Route path="Store" element={<CourseStore />} />
+            <Route path="Careers" element={<CarrerGrid />} />
             <Route path="careers/:roleId" element={<CareerRoleDetails />} />
             <Route path="Notes/*" element={<NotesApp />} />
             <Route path="Notes/AI" element={<AI />} />
