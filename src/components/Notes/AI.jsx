@@ -96,9 +96,9 @@ function AI() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "mistralai/mistral-7b-instruct:free",
+          model: "mistralai/devstral-2512:free",
           messages: [{ role: "user", content: fullPrompt }],
-          max_tokens: 1500,
+          max_tokens: 800,
         }),
       });
 
