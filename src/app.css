@@ -76,3 +76,34 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 20px 60px rgba(96, 245, 255, 0.15);
 }
+
+.gradient-text {
+    background: linear-gradient(135deg, #60F5FF 0%, #6C47FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .card-elevated {
+    box-shadow: 0 8px 32px -12px rgba(96, 245, 255, 0.15);
+  }
+  
+  .bg-gradient-card {
+    background: linear-gradient(135deg, 
+      rgba(15, 18, 35, 0.8) 0%, 
+      rgba(26, 29, 58, 0.6) 100%
+    );
+    backdrop-filter: blur(10px);
+  }
+  
+  .shadow-glow-cyan {
+    box-shadow: 0 0 20px rgba(96, 245, 255, 0.4),
+                0 0 40px rgba(96, 245, 255, 0.2);
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }

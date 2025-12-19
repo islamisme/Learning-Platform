@@ -1,13 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { courses } from '../data/courses'
+import React from "react";
+import { Link } from "react-router-dom";
+import { courses } from "../data/courses";
 
 function CourseStore() {
+  if (!Array.isArray(courses)) {
+    return null;
+  }
+
   return (
     <div className="space-y-6 text-white">
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold text-[#F5F7FF]">متجر الدورات</h1>
-        <p className="text-sm text-[#C7CCF5]">استكشف مجموعة واسعة من الدورات التعليمية والتطويرية</p>
+        <h1 className="text-3xl font-semibold text-[#F5F7FF]">
+          متجر الدورات
+        </h1>
+        <p className="text-sm text-[#C7CCF5]">
+          استكشف مجموعة واسعة من الدورات التعليمية والتطويرية
+        </p>
       </div>
 
       {courses.length > 0 && (
@@ -19,7 +27,7 @@ function CourseStore() {
             </p>
             <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
-          
+
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
               <div
@@ -34,22 +42,26 @@ function CourseStore() {
                     {course.instructor}
                   </p>
                 </div>
-                
+
                 <div className="mt-auto space-y-3">
-                  {/* Progress Bar */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-[0.65rem]">
-                      <span className="uppercase tracking-[0.3em] text-[#B7BCD9]">التقدم</span>
-                      <span className="font-semibold text-[#60F5FF]">{course.progress}%</span>
+                      <span className="uppercase tracking-[0.3em] text-[#B7BCD9]">
+                        التقدم
+                      </span>
+                      <span className="font-semibold text-[#60F5FF]">
+                        {course.progress}%
+                      </span>
                     </div>
+
                     <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-                      <div 
+                      <div
                         className="h-full rounded-full bg-gradient-to-r from-[#6C47FF] to-[#60F5FF] transition-all duration-500"
                         style={{ width: `${course.progress}%` }}
                       />
                     </div>
                   </div>
-                  
+
                   <Link
                     to={`/Home/Notes?course=${course.id}`}
                     className="inline-flex items-center justify-center rounded-full border border-[#6C47FF]/60 bg-[#6C47FF]/20 px-4 py-2 text-[0.65rem] uppercase tracking-[0.3em] text-[#F5F7FF] transition-colors hover:border-[#60F5FF]/70 hover:text-[#60F5FF]"
@@ -63,7 +75,7 @@ function CourseStore() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default CourseStore
+export default CourseStore;
