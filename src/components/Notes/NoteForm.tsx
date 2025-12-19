@@ -5,6 +5,7 @@ import CreatableReactSelect from "react-select/creatable"
 import { NoteData, Tag } from "./App"
 import { courses } from "../../data/courses"
 import AI from "./AI"
+import { RichTextEditor } from "./RichTextEditor"
 
 type NoteFormProps = {
   onSubmit: (data: NoteData) => Promise<void> | void
@@ -22,7 +23,7 @@ export function NoteForm({
   courseId,
 }: NoteFormProps) {
   const titleRef = useRef<HTMLInputElement>(null)
-  const markdownRef = useRef<HTMLTextAreaElement>(null)
+  const [markdownContent, setMarkdownContent] = useState(markdown)
   const [selectedTags, setSelectedTags] = useState<Tag[]>(tags)
   const [Ai, setAi] = useState(0)
   const [searchParams] = useSearchParams()
@@ -41,7 +42,7 @@ export function NoteForm({
     try {
       await onSubmit({
         title: titleRef.current!.value,
-        markdown: markdownRef.current!.value,
+        markdown: markdownContent,
         tags: selectedTags,
         courseId: selectedCourseId,
       })
@@ -122,12 +123,11 @@ function handle_Ai(){
           </Col>
         </Row>
         <Form.Group controlId="markdown">
-          <Form.Label>Body</Form.Label>
-          <Form.Control
-            defaultValue={markdown}
-            required
-            as="textarea"
-            ref={markdownRef}
+          <Form.Label className="text-[#D5C9FF]">Note Content</Form.Label>
+          <RichTextEditor
+            value={markdownContent}
+            onChange={setMarkdownContent}
+            placeholder="Write your notes here... Use the formatting tools above!"
             rows={15}
           />
           {Ai ? <AI/> : ""}
