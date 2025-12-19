@@ -14,6 +14,8 @@ import CourseStore from './components/CourseStore'
 
 import { NewNote } from './components/Notes/NewNote'
 import AuthGate from './components/AuthGate'
+import CoursePage from './components/CoursePage'
+import CourseProgress from './components/CourseProgress'
 function App() {
   return (
     <EnrolledCoursesProvider>
@@ -26,6 +28,8 @@ function App() {
             <Route path="Store" element={<CourseStore />} />
             <Route path="Careers" element={<CarrerGrid />} />
             <Route path="careers/:roleId" element={<CareerRoleDetails />} />
+            <Route path="/Home/Progress/:courseId/*" element={<CourseProgress />}/>
+            <Route path="careers/:roleId/:courseIndex" element={<CoursePage />} />
             <Route path="Notes/*" element={<NotesApp />} />
             <Route path="Notes/AI" element={<AI />} />
           </Route>
