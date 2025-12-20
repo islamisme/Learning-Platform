@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
-import { useLocalStorage } from "./useLocalStorage"; // Adjust path as needed
+import { useNotes } from "../../context/NotesContext";
 
 function AI() {
   const [input, setInput] = useState("");
@@ -11,15 +11,17 @@ function AI() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [includeContext, setIncludeContext] = useState(true);
   
-  const [notes, setNotes] = useLocalStorage("NOTES", []);
-  const [tags, setTags] = useLocalStorage("TAGS", []);
+  const { notes, tags } = useNotes();
   
-  // Get notes with their tags
+  // Get notes with their tags - handle both tag objects and tag IDs
   const notesWithTags = useMemo(() => {
     return notes.map(note => {
-      return { 
-        ...note, 
-        tags: tags.filter(tag => note.tagIds.includes(tag.id)) 
+      const noteTags = note.tags || [];
+      return {
+        ...note,
+        tags: noteTags
+          .map(tag => (typeof tag === 'string' ? tags.find(t => t.id === tag) : tags.find(t => t.id === tag.id) ?? tag))
+          .filter(Boolean),
       };
     });
   }, [notes, tags]);
@@ -36,7 +38,7 @@ function AI() {
 
     if (selectedTag) {
       filtered = filtered.filter(note => 
-        note.tagIds.includes(selectedTag)
+        note.tags.some(tag => (tag.id === selectedTag || tag === selectedTag))
       );
     }
 

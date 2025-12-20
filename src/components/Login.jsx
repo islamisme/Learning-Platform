@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useUser } from '../context/UserContext'
 
 const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '')
 
@@ -9,6 +10,7 @@ function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { setUserData } = useUser()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -43,7 +45,8 @@ function Login() {
         console.error('Login error:', errorMessage, payload)
         throw new Error(errorMessage)
       }
-      navigate('/Home', { state: { user: payload } })
+      setUserData(payload)
+      navigate('/Home')
     } catch (err) {
       console.error('Login error:', err)
       setError(err.message || 'Login failed')

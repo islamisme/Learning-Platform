@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useMemo } from "react";
 import { CareerRoles } from "./CareerRoles";
 
@@ -107,13 +107,21 @@ function CourseProgress() {
               >
                 {/* Section Header */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6C47FF]/30 text-[#60F5FF] font-semibold text-sm">
-                      {idx + 1}
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#6C47FF]/30 text-[#60F5FF] font-semibold text-sm">
+                        {idx + 1}
+                      </div>
+                      <h3 className="text-base font-semibold text-[#F5F7FF]">
+                        {section.title}
+                      </h3>
                     </div>
-                    <h3 className="text-base font-semibold text-[#F5F7FF]">
-                      {section.title}
-                    </h3>
+                    <Link 
+                      to={`/Home/Lecture/${course.roleId}/${courseId}`}
+                      className="rounded-lg border border-[#60F5FF]/40 bg-[#60F5FF]/10 px-3 py-1.5 text-xs uppercase tracking-[0.2em] text-[#60F5FF] transition-all hover:border-[#60F5FF]/60 hover:bg-[#60F5FF]/20"
+                    >
+                      View Lectures →
+                    </Link>
                   </div>
                   
                   {/* Section Progress */}
