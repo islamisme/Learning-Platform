@@ -8,6 +8,7 @@ import { NoteList } from "./NoteList"
 import { NoteLayout } from "./NoteLayout"
 import { Note } from "./Note"
 import { EditNote } from "./EditNote"
+import { useNotes } from "../../context/NotesContext"
 import {
   createNote as apiCreateNote,
   createTag as apiCreateTag,
@@ -40,6 +41,7 @@ function App() {
   const [tags, setTags] = useState<Tag[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { updateNotes: updateContextNotes, updateTags: updateContextTags } = useNotes()
 
   useEffect(() => {
     let cancelled = false
@@ -49,6 +51,9 @@ function App() {
         if (!cancelled) {
           setNotes(apiNotes)
           setTags(apiTags)
+          // Share notes with context for AI feature
+          updateContextNotes(apiNotes)
+          updateContextTags(apiTags)
         }
       } catch (err) {
         if (!cancelled) {
@@ -78,8 +83,12 @@ function App() {
       ...data,
       tags: selectedTags,
     })
-    setNotes(prev => [note, ...prev.filter(n => n.id !== note.id)])
+    const updatedNotes = [note, ...notes.filter(n => n.id !== note.id)]
+    setNotes(updatedNotes)
     setTags(updatedTags)
+    // Share with context
+    updateContextNotes(updatedNotes)
+    updateContextTags(updatedTags)
   }
 
   async function onUpdateNote(id: string, { tags: selectedTags, ...data }: NoteData) {
@@ -87,13 +96,20 @@ function App() {
       ...data,
       tags: selectedTags,
     })
-    setNotes(prev => prev.map(n => (n.id === id ? note : n)))
+    const updatedNotes = notes.map(n => (n.id === id ? note : n))
+    setNotes(updatedNotes)
     setTags(updatedTags)
+    // Share with context
+    updateContextNotes(updatedNotes)
+    updateContextTags(updatedTags)
   }
 
   async function onDeleteNote(id: string) {
     await apiDeleteNote(id)
-    setNotes(prev => prev.filter(note => note.id !== id))
+    const updatedNotes = notes.filter(note => note.id !== id)
+    setNotes(updatedNotes)
+    // Share with context
+    updateContextNotes(updatedNotes)
   }
 
   async function addTag(label: string) {

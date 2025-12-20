@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 
 export default function Sidebar() {
   const sections = [
@@ -68,10 +68,12 @@ export default function Sidebar() {
               <span className="text-lg">⭐</span>
               <span className="font-semibold">Favorites</span>
             </button>
-            <button className="glass flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[#F5F7FF] transition duration-200 hover:border-[#60F5FF]/40 hover:bg-[#60F5FF]/10">
-              <span className="text-lg">❓</span>
-              <span className="font-semibold">Support</span>
-            </button>
+            <Link to={"/"} className="glass decoration-transparent
+              flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[#F5F7FF] transition 
+              duration-200 hover:border-[#60F5FF]/40 hover:bg-[#60F5FF]/10">
+              <span className="text-lg">🚨</span>
+              <span className="font-semibold">Logout</span>
+            </Link>
           </div>
         </div>
       </aside>

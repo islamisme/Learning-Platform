@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useEnrolledCourses } from '../context/EnrolledCoursesContext'
-
+import { useUser } from '../context/UserContext'
 const stats = [
   { label: 'Active Courses', value: 8, glow: 'from-[#60F5FF]/60 to-transparent' },
   { label: 'Completed', value: 14, glow: 'from-[#FF7DE8]/60 to-transparent' },
@@ -27,6 +27,9 @@ const notifications = [
 
 function Dashboard() {
   const { enrolledCourses } = useEnrolledCourses()
+  const { user } = useUser()
+  
+  const userName = user?.username || user?.name || 'Cadet'
   return (
     <div className="relative h-full">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(96,245,255,0.15),transparent_60%)]" aria-hidden />
@@ -36,7 +39,7 @@ function Dashboard() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-2">
               <p className="text-xs font-semibold uppercase tracking-[0.4em] text-[#60F5FF]">Welcome Back</p>
-              <h2 className="text-4xl font-bold text-white">Welcome, Cadet 🚀</h2>
+              <h2 className="text-4xl font-bold text-white">Welcome {userName}</h2>
               <p className="text-sm text-[#B7BCD9]">Continue your learning journey and reach new milestones</p>
             </div>
             <div className="glass rounded-full px-6 py-3 text-xs font-bold uppercase tracking-[0.3em] text-[#60F5FF] border border-[#60F5FF]/30">

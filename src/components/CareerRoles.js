@@ -1,4 +1,3 @@
-// Grid Component for all Career Roles
 export const CareerRoles = [
   {
     id: "ml-engineer",
@@ -36,10 +35,20 @@ export const CareerRoles = [
           "Unsupervised Learning (Clustering & Dimensionality Reduction)",
           "Deep Learning & Neural Networks",
         ],
+        lectures: [
+          "Learn foundational algorithms like linear/logistic regression, support vector machines, and decision trees for predicting labeled outcomes from feature data.",
+          "Discover patterns in unlabeled data using k-means clustering and reduce complexity using Principal Component Analysis (PCA) for efficient modeling.",
+          "Implement advanced architectures—CNNs for images, RNNs/LSTMs for sequences, and Transformers for NLP—using TensorFlow and Python, with real-world applications in speech, translation, and generative AI.",
+        ],
       },
       {
         title: "ML Tools",
         items: ["TensorFlow / PyTorch", "scikit-learn", "Pandas & NumPy"],
+        lectures: [
+          "Build, train, and deploy neural networks in TensorFlow; complete 16 hands-on labs covering image classification, NLP, and time series forecasting.",
+          "Apply industry-standard ML workflows using scikit-learn for preprocessing, model selection, and evaluation across regression and classification tasks.",
+          "Manipulate structured data with Pandas DataFrames and perform numerical operations with NumPy arrays—essential for data preparation in ML pipelines.",
+        ],
       },
     ],
     image:
@@ -82,10 +91,20 @@ export const CareerRoles = [
           "Machine Learning Foundations",
           "Experimentation & A/B Testing",
         ],
+        lectures: [
+          "Apply descriptive and inferential statistics—hypothesis testing, confidence intervals, and correlation—to draw valid conclusions from data.",
+          "Use scikit-learn and pandas to build predictive models for classification and regression, including feature engineering and model validation.",
+          "Design controlled experiments, interpret p-values, and evaluate treatment effects using statistical frameworks to support business decisions.",
+        ],
       },
       {
         title: "Tools",
         items: ["Python for Data Science", "SQL for Data Analysis", "Jupyter & Notebooks"],
+        lectures: [
+          "Clean, transform, and analyze data using Pandas, NumPy, and Matplotlib; complete projects like housing price prediction and loan default classification.",
+          "Write complex SQL queries (JOINs, subqueries, aggregations) to extract insights from relational databases—critical for data retrieval in real-world analytics.",
+          "Develop reproducible analyses in Jupyter Notebooks using Python, with integration of GitHub for version control and collaboration.",
+        ],
       },
     ],
     image:
@@ -124,10 +143,20 @@ export const CareerRoles = [
       {
         title: "Analytics Courses",
         items: ["Excel for Data Analysis", "SQL Basics", "Data Visualization Fundamentals"],
+        lectures: [
+          "Use Excel functions (VLOOKUP, PivotTables, IF/AND/OR), conditional formatting, and charts to summarize business metrics and track KPIs.",
+          "Retrieve and filter data using SQL SELECT statements, JOINs, GROUP BY, and CASE logic to answer stakeholder questions from databases.",
+          "Transform raw data into compelling visual stories using best practices in color, layout, and chart selection—avoiding misleading representations.",
+        ],
       },
       {
         title: "BI Tools",
         items: ["Tableau Dashboards", "Power BI Reports", "Google Data Studio"],
+        lectures: [
+          "Build interactive Tableau dashboards with filters, parameters, and calculated fields to explore sales, marketing, or operations data dynamically.",
+          "Connect to data sources in Power BI, create DAX measures, and publish reports to the cloud for enterprise-wide sharing and collaboration.",
+          "Design free, web-based dashboards in Google Looker Studio (formerly Data Studio) with live connectors to Google Sheets, BigQuery, and more.",
+        ],
       },
     ],
     image:
@@ -166,10 +195,20 @@ export const CareerRoles = [
       {
         title: "Core Python",
         items: ["Python Basics", "Object-Oriented Python", "Error Handling & Testing"],
+        lectures: [
+          "Master variables, loops, functions, file I/O, and core data structures (lists, dictionaries, tuples) through practical scripting exercises.",
+          "Design reusable code using classes, inheritance, and encapsulation to model real-world systems like users, products, or transactions.",
+          "Debug programs using try/except blocks and write unit tests with Python’s unittest or pytest frameworks to ensure reliability.",
+        ],
       },
       {
         title: "Backend & APIs",
         items: ["REST APIs with FastAPI/Django", "Databases with SQLAlchemy", "Authentication & Security"],
+        lectures: [
+          "Build RESTful web services that return JSON responses, handle HTTP methods (GET/POST/PUT/DELETE), and integrate with frontends.",
+          "Use Django ORM or SQLAlchemy to interact with SQLite, PostgreSQL, or MySQL—performing CRUD operations without raw SQL.",
+          "Implement secure user login, password hashing (bcrypt), session management, and HTTPS to protect web applications from common attacks.",
+        ],
       },
     ],
     image:
@@ -211,10 +250,20 @@ export const CareerRoles = [
       {
         title: "BI Foundations",
         items: ["Data Warehousing Basics", "ETL Concepts", "Dimensional Modeling"],
+        lectures: [
+          "Understand star/snowflake schemas, fact/dimension tables, and how data warehouses support historical analysis and reporting.",
+          "Learn to Extract, Transform, and Load (ETL) data from multiple sources into unified formats using Power Query or Python scripts.",
+          "Model business processes (e.g., sales, inventory) using dimensional modeling to optimize query performance and usability in dashboards.",
+        ],
       },
       {
         title: "Dashboards",
         items: ["Power BI Dashboards", "Advanced DAX", "Storytelling with Data"],
+        lectures: [
+          "Design interactive Power BI reports with slicers, drill-throughs, and bookmarks to enable self-service analytics across teams.",
+          "Write DAX formulas for time intelligence (YTD, QTD), dynamic measures, and complex aggregations to unlock deeper insights.",
+          "Structure data narratives using annotated visuals, consistent color schemes, and logical flow—inspired by Cole Nussbaumer’s storytelling principles.",
+        ],
       },
     ],
     image:
@@ -253,10 +302,20 @@ export const CareerRoles = [
       {
         title: "Core Frontend",
         items: ["HTML & Semantic Markup", "Modern CSS & Flex/Grid", "JavaScript Essentials"],
+        lectures: [
+          "Structure accessible, SEO-friendly pages using semantic HTML5 elements (<header>, <nav>, <main>, <section>, <article>, <footer>).",
+          "Create responsive layouts with CSS Flexbox (1D alignment) and Grid (2D placement); enhance with media queries for mobile-first design.",
+          "Add interactivity with DOM manipulation, event listeners, promises, and async/await—using modern ES6+ JavaScript syntax.",
+        ],
       },
       {
         title: "Frameworks",
         items: ["React Basics", "Routing & State Management", "UI Libraries (Tailwind/Material UI)"],
+        lectures: [
+          "Build reusable UI components with JSX, props, and React hooks (useState, useEffect) to manage dynamic content and user input.",
+          "Navigate between views using React Router and manage global state with Context API or external libraries like Redux Toolkit.",
+          "Accelerate UI development using pre-designed, responsive component libraries like Material UI or utility-first Tailwind CSS.",
+        ],
       },
     ],
     image:
@@ -295,10 +354,20 @@ export const CareerRoles = [
       {
         title: "Automation & Scripting",
         items: ["Python/Bash Scripting", "Task Automation Basics", "API-based Automation"],
+        lectures: [
+          "Automate file management, log parsing, and system tasks using Python scripts and Bash shell commands on Linux/macOS/Windows Subsystem for Linux.",
+          "Schedule recurring jobs with cron (Linux) or Task Scheduler (Windows); automate backups, reports, and data transfers without manual intervention.",
+          "Interact with REST APIs using Python’s requests library to fetch data, trigger actions, or synchronize systems (e.g., GitHub, Slack, Jira).",
+        ],
       },
       {
         title: "CI/CD & Tools",
         items: ["GitHub Actions / GitLab CI", "Jenkins Pipelines", "Monitoring & Alerting Basics"],
+        lectures: [
+          "Define CI/CD workflows in YAML to automatically test, build, and deploy code on every Git push using GitHub Actions or GitLab CI.",
+          "Configure Jenkins pipelines to orchestrate multi-stage deployments, integrate with Docker, and run automated test suites.",
+          "Set up basic monitoring with Prometheus/Grafana or cloud-native tools to track system health and trigger alerts on failures.",
+        ],
       },
     ],
     image:
@@ -337,10 +406,20 @@ export const CareerRoles = [
       {
         title: "Content Strategy",
         items: ["Content Planning & Calendars", "Copywriting Basics", "Audience Research"],
+        lectures: [
+          "Develop editorial calendars aligned with business goals, seasonal trends, and audience behavior to ensure consistent publishing.",
+          "Write compelling headlines, hooks, and CTAs using principles of persuasive writing and brand voice consistency.",
+          "Use surveys, social listening, and analytics tools to understand audience demographics, pain points, and content preferences.",
+        ],
       },
       {
         title: "Creation Tools",
         items: ["Video Editing Basics", "Graphic Assets with Canva/Adobe", "Social Media Platforms"],
+        lectures: [
+          "Edit short-form videos using CapCut, Premiere Rush, or DaVinci Resolve—adding cuts, text overlays, music, and transitions.",
+          "Design logos, banners, and infographics using Canva templates or Adobe Photoshop/Illustrator for professional-grade visuals.",
+          "Optimize post formatting, hashtags, and timing for platforms like Instagram, TikTok, LinkedIn, and YouTube to maximize reach and engagement.",
+        ],
       },
     ],
     image:
@@ -379,10 +458,20 @@ export const CareerRoles = [
       {
         title: "Security Fundamentals",
         items: ["Network Security Basics", "Threats & Vulnerabilities", "Incident Response"],
+        lectures: [
+          "Understand TCP/IP, firewalls, IDS/IPS, and secure network segmentation to defend against unauthorized access and data exfiltration.",
+          "Identify common threats: phishing, malware, DDoS, SQL injection—and assess system vulnerabilities using risk matrices.",
+          "Follow structured incident response protocols: detect, contain, eradicate, recover, and report—aligned with NIST frameworks.",
+        ],
       },
       {
         title: "Security Tools",
         items: ["SIEM Basics", "Vulnerability Scanners", "Linux & Scripting for Security"],
+        lectures: [
+          "Use SIEM platforms (e.g., Splunk, IBM QRadar) to aggregate logs, detect anomalies, and generate real-time security alerts.",
+          "Run automated scans with tools like Nessus or OpenVAS to discover open ports, outdated software, and misconfigurations.",
+          "Leverage Linux command line (grep, awk, netstat) and Python scripts to analyze logs, automate threat hunting, and parse forensic data.",
+        ],
       },
     ],
     image:
@@ -424,10 +513,20 @@ export const CareerRoles = [
       {
         title: "Game Dev Core",
         items: ["Game Design Principles", "Unity Fundamentals", "C# Scripting for Games"],
+        lectures: [
+          "Apply core game design concepts: mechanics, dynamics, aesthetics (MDA framework), player motivation, and feedback loops.",
+          "Navigate the Unity Editor—scene management, asset import, prefab system, and component-based architecture.",
+          "Write C# scripts to control player movement, enemy AI, scoring, health, and interactions using Unity’s MonoBehaviour lifecycle.",
+        ],
       },
       {
         title: "Game Systems",
         items: ["Physics & Animation", "UI & Menus", "Level Design Basics"],
+        lectures: [
+          "Implement realistic movement and collisions using Unity’s physics engine (Rigidbody, Colliders) and animate characters with Animator Controller.",
+          "Design in-game HUDs, pause menus, and settings panels using Unity’s UI system (Canvas, Text, Buttons, Sliders).",
+          "Build modular levels with tilemaps, triggers, and scripted events to guide player progression and storytelling.",
+        ],
       },
     ],
     image:
@@ -469,10 +568,20 @@ export const CareerRoles = [
       {
         title: "Design Foundations",
         items: ["Color Theory", "Typography", "Layout & Composition"],
+        lectures: [
+          "Apply color psychology, contrast, and harmony (complementary, analogous schemes) to evoke emotion and guide attention.",
+          "Select and pair typefaces based on readability, mood, and hierarchy—mastering kerning, leading, and alignment.",
+          "Use grid systems, white space, and visual balance (symmetry/asymmetry) to create clear, engaging layouts for posters, ads, or websites.",
+        ],
       },
       {
         title: "Design Tools",
         items: ["Adobe Photoshop Basics", "Illustrator & Vector Graphics", "Branding & Visual Identity"],
+        lectures: [
+          "Edit and composite images in Photoshop using layers, masks, adjustment layers, and selection tools for photo retouching or digital art.",
+          "Create scalable logos, icons, and illustrations in Illustrator using pen tool, shapes, paths, and gradients.",
+          "Develop cohesive brand identities—including logos, color palettes, and style guides—that communicate a company’s values consistently.",
+        ],
       },
     ],
     image:
@@ -513,10 +622,20 @@ export const CareerRoles = [
       {
         title: "Android Core",
         items: ["Kotlin/Java Basics", "Android UI & Layouts", "Activities & Fragments"],
+        lectures: [
+          "Master Kotlin syntax—null safety, extension functions, lambdas—and use it as the preferred language for modern Android development.",
+          "Build responsive user interfaces with XML layouts, ConstraintLayout, RecyclerView, and Material Design components.",
+          "Manage app navigation using Activities and reusable Fragments; handle lifecycle events to prevent memory leaks and crashes.",
+        ],
       },
       {
         title: "Advanced Mobile",
         items: ["Networking & APIs", "Local Storage & Room", "App Performance & Debugging"],
+        lectures: [
+          "Fetch data from REST APIs using Retrofit or Ktor; parse JSON with Moshi or Gson to display dynamic content in your app.",
+          "Persist data locally using Room Database—define entities, DAOs, and migrations for offline-first functionality.",
+          "Profile CPU, memory, and battery usage with Android Studio Profiler; fix ANRs, memory leaks, and slow rendering for smooth UX.",
+        ],
       },
     ],
     image:
