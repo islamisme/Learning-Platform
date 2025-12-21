@@ -1,7 +1,27 @@
 import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { useUser } from '../context/UserContext'
+
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '')
 
 export default function Sidebar() {
+  const navigate = useNavigate()
+  const { logout } = useUser()
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/auth/logout.php`, {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch (err) {
+      console.error('Logout failed', err)
+    } finally {
+      logout()
+      navigate('/')
+    }
+  }
+
   const sections = [
     {
       title: 'Workspace',
@@ -11,13 +31,9 @@ export default function Sidebar() {
         { label: 'Course Store', to: '/Home/Store', accent: 'text-[#FFE7FF]' },
         { label: 'Careers', to: '/Home/Careers', accent: 'text-[#6C47FF]' },
         { label: 'Notes', to: '/Home/Notes', accent: 'text-[#FF7DE8]' },
-        {
-          label: 'AI',
-          to: '/Home/Notes/AI',
-        },
+        { label: 'AI', to: '/Home/Notes/AI', accent: 'text-[#60F5FF]' },
       ],
     },
-   
   ]
 
   return (
@@ -31,11 +47,10 @@ export default function Sidebar() {
                 <span className="text-[0.6rem] uppercase tracking-[0.5em] text-[#60F5FF] font-semibold">Knowledge Base</span>
                 <h1 className="text-3xl font-bold gradient-text">Learning Hub</h1>
               </div>
-            
             </div>
           </div>
 
-          <nav className="flex-1 space-y-8  pb-6">
+          <nav className="flex-1 space-y-8 pb-6">
             {sections.map((section) => (
               <div key={section.title} className="space-y-3">
                 <span className="text-[0.6rem] uppercase tracking-[0.4em] text-[#8F94BC]">{section.title}</span>
@@ -46,15 +61,13 @@ export default function Sidebar() {
                       to={item.to}
                       className={({ isActive }) =>
                         [
-                          'group abs flex item  s-center gap-3 rounded-xl  px-3 py-2 text-[0.8rem] font-medium uppercase tracking-[0.3em] transition duration-200',
-                          'text-[#DCE0FF]  hover:bg-white/10 hover:text-white',
-                          isActive ? ' bg-white/15 text-[#60F5FF] shadow-[0_15px_30px_-15px_rgba(96,245,255,0.45)]' : '',
+                          'group flex items-center gap-3 rounded-xl px-3 py-2 text-[0.8rem] font-medium uppercase tracking-[0.3em] transition duration-200',
+                          'text-[#DCE0FF] hover:bg-white/10 hover:text-white',
+                          isActive ? 'bg-white/15 text-[#60F5FF] shadow-[0_15px_30px_-15px_rgba(96,245,255,0.45)]' : '',
                         ].join(' ')
                       }
                     >
-                      <span className={`text-xs opacity-80 ${item.accent}`}>
-                        ●
-                      </span>
+                      <span className={`text-xs opacity-80 ${item.accent}`}>●</span>
                       <span>{item.label}</span>
                     </NavLink>
                   ))}
@@ -68,12 +81,17 @@ export default function Sidebar() {
               <span className="text-lg">⭐</span>
               <span className="font-semibold">Favorites</span>
             </button>
-            <Link to={"/"} className="glass decoration-transparent
-              flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[#F5F7FF] transition 
-              duration-200 hover:border-[#60F5FF]/40 hover:bg-[#60F5FF]/10">
-              <span className="text-lg">🚨</span>
+            <button className="glass flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[#F5F7FF] transition duration-200 hover:border-[#60F5FF]/40 hover:bg-[#60F5FF]/10">
+              <span className="text-lg">❓</span>
+              <span className="font-semibold">Support</span>
+            </button>
+            <button
+              onClick={handleLogout}
+              className="glass flex w-full items-center gap-3 rounded-xl px-4 py-3 text-[#F5F7FF] transition duration-200 border border-white/10 hover:border-[#FF7DE8]/40 hover:bg-[#FF7DE8]/10"
+            >
+              <span className="text-lg">⎋</span>
               <span className="font-semibold">Logout</span>
-            </Link>
+            </button>
           </div>
         </div>
       </aside>

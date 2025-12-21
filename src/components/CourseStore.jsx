@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { CareerRoles } from "./CareerRoles";
 import { useEnrolledCourses } from '../context/EnrolledCoursesContext'
 
 function CourseStore() {
@@ -7,30 +6,23 @@ function CourseStore() {
   const { enrollCourse } = useEnrolledCourses();
 
   useEffect(() => {
-    const courses = [];
-    CareerRoles.forEach(role => {
-      if (role.courses && role.courses.length > 0) {
-        role.courses.forEach(course => {
-          courses.push({
-            ...course,
-            roleId: role.id,
-            roleTitle: role.title,
-          });
-        });
+    const load = async () => {
+      try {
+        const res = await fetch('/api/courses/index.php');
+        const data = await res.json();
+        setAllCourses(data?.courses ?? []);
+      } catch (err) {
+        console.error('Failed to load courses', err);
+        setAllCourses([]);
       }
-    });
-    setAllCourses(courses);
+    };
+
+    load();
   }, []);
 
   const handleEnroll = (course) => {
-    enrollCourse({
-      id: `${course.roleId}-${course.title}`,
-      title: course.title,
-      provider: course.provider,
-      url: course.url,
-      roleId: course.roleId,
-      roleTitle: course.roleTitle,
-    });
+    if (!course?.id) return;
+    enrollCourse(course.id);
   };
 
   if (!allCourses || allCourses.length === 0) {
@@ -95,7 +87,7 @@ function CourseStore() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {allCourses.map((course, index) => (
               <div
-                key={`${course.roleId}-${course.title}`}
+                key={course.id ?? `${course.role_id}-${course.title}`}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 shadow-[0_15px_35px_-18px_rgba(10,12,25,0.9)] transition-all duration-300 hover:border-[#60F5FF]/40 hover:from-white/[0.12] hover:to-white/[0.05] hover:shadow-[0_20px_45px_-15px_rgba(96,245,255,0.2)]"
               >
                 {/* Card Border Glow Effect */}
@@ -126,7 +118,7 @@ function CourseStore() {
                     <div className="flex items-center gap-2">
                       <div className="h-1.5 w-1.5 rounded-full bg-[#6C47FF]" />
                       <p className="text-xs text-[#C7CCF5]">
-                        {course.roleTitle}
+                        {course.role_title}
                       </p>
                     </div>
                   </div>
