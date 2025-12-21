@@ -6,12 +6,8 @@ $dbSettings = [];
 
 if (file_exists($configPath)) {
 	$result = require $configPath;
-	error_log('BOOTSTRAP: config include result type ' . gettype($result));
 	if (is_array($result)) {
 		$dbSettings = $result;
-		error_log('BOOTSTRAP: loaded config.php from ' . realpath($configPath));
-	} else {
-		error_log('BOOTSTRAP: config.php did not return an array, falling back to env vars');
 	}
 } else {
 	error_log('BOOTSTRAP: config.php missing at ' . $configPath . ' - using fallback env values');
