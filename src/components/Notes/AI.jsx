@@ -1,17 +1,20 @@
 import { useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNotes } from "../../context/NotesContext";
+import { updateNote as apiUpdateNote } from "./api";
 
 function AI() {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [selectedTag, setSelectedTag] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [includeContext, setIncludeContext] = useState(true);
+  const [selectedNoteId, setSelectedNoteId] = useState("");
   
-  const { notes, tags } = useNotes();
+  const { notes, tags, updateNotes, updateTags } = useNotes();
   
   // Get notes with their tags - handle both tag objects and tag IDs
   const notesWithTags = useMemo(() => {
@@ -120,6 +123,36 @@ function AI() {
   const handleClearFilters = () => {
     setSelectedTag("");
     setSelectedCourse("");
+  };
+
+  const handleSaveResponseToNote = async () => {
+    if (!response || !selectedNoteId) return;
+    const target = notes.find((n) => n.id === selectedNoteId);
+    if (!target) return;
+
+    setSaving(true);
+    setError(null);
+    try {
+      const updatedMarkdown = `${target.markdown}\n\n---\nAI Response:\n${response}`;
+      const { note, tags: updatedTags } = await apiUpdateNote(target.id, {
+        title: target.title,
+        markdown: updatedMarkdown,
+        tags: target.tags || [],
+        courseId: target.courseId ?? null,
+      });
+
+      // Refresh notes in context so AI and Notes app stay in sync
+      const mergedNotes = notes.map((n) => (n.id === target.id ? note : n));
+      updateNotes(mergedNotes);
+      if (updatedTags) {
+        updateTags(updatedTags);
+      }
+    } catch (err) {
+      console.error("Failed to save AI response to note", err);
+      setError(err.message || "Failed to save to note");
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -262,6 +295,30 @@ function AI() {
               >
                 Clear
               </button>
+            </div>
+            <div className="flex flex-col gap-2 mb-4">
+              <label className="text-sm text-[#D5C9FF] font-medium">Add this response to a note</label>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                <select
+                  value={selectedNoteId}
+                  onChange={(e) => setSelectedNoteId(e.target.value)}
+                  className="w-full sm:w-auto flex-1 p-3 rounded-lg bg-[rgba(15,18,35,0.65)] border border-[rgba(112,94,255,0.35)] text-white focus:outline-none focus:ring-2 focus:ring-[#60F5FF]/50 transition-all"
+                >
+                  <option value="">Select a note</option>
+                  {notes.map((note) => (
+                    <option key={note.id} value={note.id}>
+                      {note.title || 'Untitled'}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={handleSaveResponseToNote}
+                  disabled={!selectedNoteId || saving}
+                  className="w-full sm:w-auto px-4 py-3 rounded-lg bg-gradient-to-r from-[#6C47FF] to-[#60F5FF] text-white font-semibold hover:shadow-lg hover:shadow-[#6C47FF]/40 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {saving ? 'Saving…' : 'Add to note'}
+                </button>
+              </div>
             </div>
             <div className="prose prose-invert prose-sm max-w-none text-white">
               <ReactMarkdown>
