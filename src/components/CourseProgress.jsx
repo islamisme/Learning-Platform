@@ -1,24 +1,52 @@
 import { Link, useParams } from "react-router-dom";
-import { useState, useMemo } from "react";
-import { CareerRoles } from "./CareerRoles";
+import { useState, useMemo, useEffect } from "react";
+import { useUser } from "../context/UserContext";
+
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/$/, '')
 
 function CourseProgress() {
   const { courseId } = useParams();
   const [completedItems, setCompletedItems] = useState({});
+  const [course, setCourse] = useState(null);
+  const { user } = useUser();
 
-  // Find course across all roles
-  const course = CareerRoles
-    .flatMap(role => role.courses.map(c => ({
-      ...c,
-      roleTitle: role.title,
-      roleId: role.id,
-      sections: role.courseSections
-    })))
-    .find(c => {
-      const courseSlug = c.title.toLowerCase().replace(/\s+/g, "-");
-      const fullId = `${c.roleId}-${c.title}`;
-      return courseSlug === courseId || fullId === courseId;
-    });
+  // Load course detail (with sections) from backend; fallback to not found UI
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/courses/show.php?id=${encodeURIComponent(courseId)}`);
+        if (!res.ok) throw new Error('Course not found');
+        const data = await res.json();
+        setCourse({
+          ...data,
+          roleTitle: data.role_title,
+          roleId: data.role_id,
+          sections: data.sections ?? [],
+        });
+      } catch (err) {
+        console.error('Failed to load course detail', err);
+        setCourse(null);
+      }
+    };
+    load();
+  }, [courseId]);
+
+  // Load saved progress for this user/course
+  useEffect(() => {
+    const loadProgress = async () => {
+      if (!user?.id || !course) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/courses/progress.php?user_id=${encodeURIComponent(user.id)}&course_id=${encodeURIComponent(course.id)}`, {
+          credentials: 'include',
+        });
+        const data = await res.json();
+        if (data?.progress) setCompletedItems(data.progress);
+      } catch (err) {
+        console.error('Failed to load progress', err);
+      }
+    };
+    loadProgress();
+  }, [user, course]);
 
   // Calculate progress
   const { progress, totalItems, completedCount } = useMemo(() => {
@@ -35,10 +63,25 @@ function CourseProgress() {
   }, [course, completedItems]);
 
   const handleToggleItem = (itemId) => {
+    const newValue = !completedItems[itemId];
     setCompletedItems(prev => ({
       ...prev,
-      [itemId]: !prev[itemId]
+      [itemId]: newValue
     }));
+
+    if (user?.id && course?.id) {
+      fetch(`${API_BASE_URL}/courses/progress.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          user_id: user.id,
+          course_id: course.id,
+          item_key: itemId,
+          completed: newValue,
+        }),
+      }).catch(err => console.error('Failed to save progress', err));
+    }
   };
 
   if (!course) {

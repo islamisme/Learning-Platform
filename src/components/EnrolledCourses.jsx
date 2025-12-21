@@ -44,7 +44,7 @@ function EnrolledCourses() {
                     <span>{course.provider}</span>
                     <span className="text-[#60F5FF]/50">·</span>
                     <span className="text-[#60F5FF]">
-                      {course.roleTitle}
+                      {course.role_title}
                     </span>
                   </div>
                 </div>
