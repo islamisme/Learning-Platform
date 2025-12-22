@@ -4,13 +4,13 @@ A modern web-based learning platform that allows students and instructors to con
 ### ✨ Features To-Do List
 
 - [x] 🧾 User Roles — Student, Instructor
-- [ ] 📚 Course Management — Create, edit, and enroll in courses  
+- [x] 📚 Course Management — Create, edit, and enroll in courses  
 - [ ] 🎥 Lessons — Video, text, and file-based learning modules  
 - [ ] 🧮 Quizzes & Assessments — Interactive questions and auto-grading  
 - [ ] 📊 Progress Tracking — Course completion stats and certificates  
 - [ ] 🔐 Authentication — Secure login & registration (NextAuth / JWT)  
-- [ ] 🌐 RESTful API — PHP route handlers, extendable to other backends  
-- [ ] 🎨 Frontend UI — Responsive layout with TailwindCSS  
+- [x] 🌐 RESTful API — PHP route handlers, extendable to other backends  
+- [x] 🎨 Frontend UI — Responsive layout with TailwindCSS  
 - [ ] 💬 Discussion Forum — Student & instructor communication  
 - [ ] 🪙 Payment System — Optional premium courses via Stripe  
 - [ ] 📈 Analytics Dashboard — For admins and instructors  
