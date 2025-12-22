@@ -13,7 +13,7 @@ import { Link, useSearchParams } from "react-router-dom"
 import ReactSelect from "react-select"
 import { Tag } from "./App"
 import styles from "./NoteList.module.css"
-import { courses } from "../../data/courses"
+import { useEnrolledCourses } from "../../context/EnrolledCoursesContext"
 
 type SimplifiedNote = {
   tags: Tag[]
@@ -45,6 +45,7 @@ export function NoteList({
   onDeleteTag,
   loading = false,
 }: NoteListProps) {
+  const { enrolledCourses } = useEnrolledCourses()
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
   const [title, setTitle] = useState("")
   const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
@@ -118,14 +119,14 @@ export function NoteList({
                 isMulti
                 placeholder="All courses"
                 value={selectedCourses.map(id => {
-                  const course = courses.find(c => c.id === id)
+                  const course = enrolledCourses.find(c => `${c.id}` === `${id}`)
                   return course
-                    ? { label: course.title, value: course.id }
+                    ? { label: course.title, value: `${course.id}` }
                     : { label: id, value: id }
                 })}
-                options={courses.map(course => ({
+                options={enrolledCourses.map(course => ({
                   label: course.title,
-                  value: course.id,
+                  value: `${course.id}`,
                 }))}
                 onChange={values => {
                   setSelectedCourses(values.map(v => v.value))

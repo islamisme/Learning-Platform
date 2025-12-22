@@ -3,7 +3,7 @@ import { Badge, Button, Col, Row, Stack } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { useNote } from "./NoteLayout"
 import { StyledMarkdown } from "./StyledMarkdown"
-import { courses } from "../../data/courses"
+import { useEnrolledCourses } from "../../context/EnrolledCoursesContext"
 
 type NoteProps = {
   onDelete: (id: string) => void
@@ -12,8 +12,9 @@ type NoteProps = {
 export function Note({ onDelete }: NoteProps) {
   const note = useNote()
   const navigate = useNavigate()
+  const { enrolledCourses } = useEnrolledCourses()
   const course = note.courseId
-    ? courses.find(c => c.id === note.courseId)
+    ? enrolledCourses.find(c => `${c.id}` === `${note.courseId}`)
     : undefined
 
   return (

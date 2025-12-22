@@ -3,7 +3,7 @@ import { Alert, Button, Col, Form, Row, Stack } from "react-bootstrap"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import CreatableReactSelect from "react-select/creatable"
 import { NoteData, Tag } from "./App"
-import { courses } from "../../data/courses"
+import { useEnrolledCourses } from "../../context/EnrolledCoursesContext"
 import AI from "./AI"
 import { RichTextEditor } from "./RichTextEditor"
 
@@ -34,6 +34,7 @@ export function NoteForm({
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const navigate = useNavigate()
+  const { enrolledCourses } = useEnrolledCourses()
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -85,7 +86,7 @@ function handle_Ai(){
                 }
               >
                 <option value="">Select course (optional)</option>
-                {courses.map(course => (
+                {enrolledCourses.map(course => (
                   <option key={course.id} value={course.id}>
                     {course.title}
                   </option>
